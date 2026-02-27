@@ -152,6 +152,15 @@
             <span class="label">Sec</span>
         </div>
     </div>
+    
+    <div style="margin-top: 30px;">
+    <button id="musicToggle" onclick="toggleMusic()" style="background: rgba(255,255,255,0.2); border: 1px solid white; color: white; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-family: 'Montserrat';">
+        🎵 Play Our Song
+    </button>
+    <audio id="weddingSong" loop>
+        <source src="Chann Vi Gawah - Madhav Mahajan.mp3" type="audio/mpeg">
+    </audio>
+</div>
 
     <script>
         const weddingDate = new Date("June 19, 2026 00:00:00").getTime();
@@ -165,6 +174,18 @@
             document.getElementById("minutes").innerHTML = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             document.getElementById("seconds").innerHTML = Math.floor((distance % (1000 * 60)) / 1000);
         }, 1000);
+        function toggleMusic() {
+            const song = document.getElementById("weddingSong");
+            const btn = document.getElementById("musicToggle");
+            
+            if (song.paused) {
+                song.play();
+                btn.innerHTML = "⏸ Pause Music";
+            } else {
+                song.pause();
+                btn.innerHTML = "🎵 Play Our Song";
+            }
+        }
     </script>
 </body>
 </html>

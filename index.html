@@ -9,21 +9,31 @@
         body {
             margin: 0;
             padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: #1a1a1a; /* Backup color */
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+            text-align: center;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+
+        /* Hero Section (The Landing Page) */
+        .hero {
             height: 100vh;
+            width: 100%;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            /* Using your local image Love_1.JPG */
             background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
                         url('Love_1.JPG');
             background-size: cover;
             background-position: center;
-            color: white;
-            font-family: 'Montserrat', sans-serif;
-            text-align: center;
-            overflow: hidden;
             position: relative;
+            flex-shrink: 0;
         }
 
         /* Floating Hearts Animation */
@@ -56,14 +66,12 @@
             letter-spacing: 1px;
             z-index: 2;
         }
-
         .header-meta { top: 0; background: linear-gradient(to bottom, rgba(0,0,0,0.4), transparent); }
         .footer-meta { bottom: 0; background: linear-gradient(to top, rgba(0,0,0,0.4), transparent); }
 
         .meta-item { text-align: center; }
         .meta-item span { display: block; font-weight: 600; font-size: 1.1rem; }
 
-        /* Typography */
         .names {
             font-family: 'Dancing Script', cursive;
             font-size: 4.5rem;
@@ -82,17 +90,6 @@
             z-index: 2;
         }
 
-        .quote {
-            font-style: italic;
-            font-size: 1.1rem;
-            max-width: 600px;
-            margin: 0 auto 40px auto;
-            opacity: 0.9;
-            line-height: 1.6;
-            z-index: 2;
-        }
-
-        /* Countdown */
         .countdown-container {
             display: flex;
             gap: 15px;
@@ -110,9 +107,7 @@
         }
 
         .number { font-size: 2.5rem; font-weight: 600; display: block; }
-        .label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; }
 
-        /* Buttons */
         .btn-container {
             margin-top: 30px;
             display: flex;
@@ -133,12 +128,6 @@
             text-decoration: none;
             font-size: 0.9rem;
             transition: all 0.3s ease;
-            width: fit-content;
-        }
-
-        .action-btn:hover {
-            background: rgba(255,255,255,0.4);
-            transform: scale(1.05);
         }
 
         .loc-btn {
@@ -152,56 +141,128 @@
             100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
         }
 
+        /* Timeline Section */
+        .timeline-section {
+            padding: 80px 20px;
+            background: #121212;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .chapter-card {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 30px;
+            padding: 50px 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .chapter-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.5rem;
+            color: #ffd700;
+            margin-bottom: 30px;
+        }
+
+        .story-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+            text-align: left;
+        }
+
+        .story-text {
+            line-height: 1.8;
+            font-size: 1.1rem;
+            font-weight: 300;
+        }
+
+        .story-text b { color: #ffb6c1; }
+
+        .photo-stack {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .story-img {
+            width: 100%;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+            transition: transform 0.3s ease;
+        }
+
+        .story-img:hover { transform: scale(1.05); }
+
+        .full-img { grid-column: span 2; }
+
         @media (max-width: 768px) {
+            .hero { height: auto; padding: 100px 20px; }
             .names { font-size: 3rem; }
-            .header-meta, .footer-meta { 
-                flex-direction: column; 
-                gap: 10px; 
-                padding: 15px; 
-                position: relative; 
-                background: none; 
-            }
-            body { height: auto; padding: 50px 0; overflow-y: auto; }
-            .footer-meta { margin-top: 40px; }
+            .header-meta, .footer-meta { position: relative; flex-direction: column; gap: 15px; background: none; padding: 20px; }
+            .story-grid { grid-template-columns: 1fr; }
+            .chapter-title { font-size: 2.5rem; }
         }
     </style>
 </head>
 <body>
 
-    <div class="header-meta">
-        <div class="meta-item"><span>A3 29</span>29th November 2025</div>
-        <div class="meta-item"><span>Fiance era started</span>24th January 2026</div>
-        <div class="meta-item"><span>18:29</span>25th November 2025</div>
-    </div>
+    <section class="hero">
+        <div class="header-meta">
+            <div class="meta-item"><span>A3 29</span>29th November 2025</div>
+            <div class="meta-item"><span>Fiance era started</span>24th January 2026</div>
+            <div class="meta-item"><span>18:29</span></div>
+        </div>
 
-    <div class="names">Prajwal & Shiwangi</div>
-    <div class="quote">"Once in a while, right in the middle of an ordinary life, love gives us a fairytale."</div>
-    <h1>Save the Date - June 19th, 2026</h1>
-    
-    <div class="countdown-container">
-        <div class="time-box"><span class="number" id="days">00</span><span class="label">Days</span></div>
-        <div class="time-box"><span class="number" id="hours">00</span><span class="label">Hrs</span></div>
-        <div class="time-box"><span class="number" id="minutes">00</span><span class="label">Min</span></div>
-        <div class="time-box"><span class="number" id="seconds">00</span><span class="label">Sec</span></div>
-    </div>
-    
-    <div class="btn-container">
-        <button id="musicToggle" class="action-btn" onclick="toggleMusic()">🎵 Play Our Song</button>
-        <a href="https://maps.app.goo.gl/D93EH4ziLjMuPRrc8" target="_blank" class="action-btn loc-btn">📍 City Club, Lucknow</a>
-    </div>
+        <div class="names">Prajwal & Shiwangi</div>
+        <h1 style="margin-top: 20px;">Save the Date - June 19th, 2026</h1>
+        
+        <div class="countdown-container">
+            <div class="time-box"><span class="number" id="days">00</span><span class="label">Days</span></div>
+            <div class="time-box"><span class="number" id="hours">00</span><span class="label">Hrs</span></div>
+            <div class="time-box"><span class="number" id="minutes">00</span><span class="label">Min</span></div>
+            <div class="time-box"><span class="number" id="seconds">00</span><span class="label">Sec</span></div>
+        </div>
+        
+        <div class="btn-container">
+            <button id="musicToggle" class="action-btn" onclick="toggleMusic()">🎵 Play Our Song</button>
+            <a href="https://maps.app.goo.gl/D93EH4ziLjMuPRrc8" target="_blank" class="action-btn loc-btn">📍 City Club, Lucknow</a>
+        </div>
 
-    <audio id="weddingSong" loop>
-        <source src="Chann Vi Gawah - Madhav Mahajan.mp3" type="audio/mpeg">
-    </audio>
+        <div style="margin-top: 40px; font-size: 0.9rem; opacity: 0.7; animation: bounce 2s infinite;">
+            Scroll to see our story ↓
+        </div>
 
-    <div class="footer-meta">
-        <div class="meta-item"><span>3rd November 2025</span></div>
-        <div class="meta-item"><span>Rokafied</span>28th November 2025</div>
-        <div class="meta-item"><span>16th November 2025</span></div>
-    </div>
+        <div class="footer-meta">
+            <div class="meta-item"><span>3rd November 2025</span></div>
+            <div class="meta-item"><span>Rokafied</span>28th November 2025</div>
+            <div class="meta-item"><span>16th November 2025</span></div>
+        </div>
+    </section>
+
+    <section class="timeline-section">
+        <div class="chapter-card">
+            <div class="chapter-title">Chapter 1: The First Hello</div>
+            <div class="story-grid">
+                <div class="story-text">
+                    It all started on <b>November 3rd</b> with a simple WhatsApp text: <i>"Hi Shiwangi, It's Prajwal this side!"</i>. By 9:30 PM that night, we were on a call that felt like a conversation with a soul I had known for lifetimes.
+                    <br><br>
+                    By <b>November 16th</b>, we were so sure of "us" that my parents traveled to Shahganj to meet her family. Seeing her radiance and happiness while meeting them, even while I was miles away in Pune, was the moment our fairytale truly began.
+                </div>
+                <div class="photo-stack">
+                    <img src="Love_2.JPG" alt="First Hello" class="story-img" title="The First Hello">
+                    <img src="Love_3.JPG" alt="Leap of Faith" class="story-img" title="A Leap of Faith">
+                    <img src="Love_4.JPG" alt="Family Union" class="story-img full-img" title="The Family Union">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <audio id="weddingSong" loop><source src="Chann Vi Gawah - Madhav Mahajan.mp3" type="audio/mpeg"></audio>
 
     <script>
-        // Hearts Logic
         function createHeart() {
             const heart = document.createElement('div');
             heart.classList.add('heart');
@@ -212,36 +273,25 @@
             heart.style.fontSize = Math.random() * 10 + 15 + "px";
             heart.style.animationDuration = Math.random() * 3 + 8 + "s";
             document.body.appendChild(heart);
-            setTimeout(() => { heart.remove(); }, 11000);
+            setTimeout(() => { heart.remove(); }, 10000);
         }
         setInterval(createHeart, 600);
 
-        // Countdown Logic
         const weddingDate = new Date("June 19, 2026 00:00:00").getTime();
-        function update() {
+        setInterval(function() {
             const now = new Date().getTime();
             const distance = weddingDate - now;
-            if (distance > 0) {
-                document.getElementById("days").innerHTML = Math.floor(distance / (1000 * 60 * 60 * 24));
-                document.getElementById("hours").innerHTML = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                document.getElementById("minutes").innerHTML = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                document.getElementById("seconds").innerHTML = Math.floor((distance % (1000 * 60)) / 1000);
-            }
-        }
-        setInterval(update, 1000);
-        update();
+            document.getElementById("days").innerHTML = Math.floor(distance / (1000 * 60 * 60 * 24));
+            document.getElementById("hours").innerHTML = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            document.getElementById("minutes").innerHTML = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            document.getElementById("seconds").innerHTML = Math.floor((distance % (1000 * 60)) / 1000);
+        }, 1000);
 
-        // Music Toggle Logic
         function toggleMusic() {
             const song = document.getElementById("weddingSong");
             const btn = document.getElementById("musicToggle");
-            if (song.paused) {
-                song.play();
-                btn.innerHTML = "⏸ Pause Music";
-            } else {
-                song.pause();
-                btn.innerHTML = "🎵 Play Our Song";
-            }
+            if (song.paused) { song.play(); btn.innerHTML = "⏸ Pause Music"; }
+            else { song.pause(); btn.innerHTML = "🎵 Play Our Song"; }
         }
     </script>
 </body>

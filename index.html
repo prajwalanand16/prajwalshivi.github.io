@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Big Day | Countdown</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@300;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), 
+                        url('https://images.unsplash.com/photo-1519741497674-611481863552?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+            text-align: center;
+        }
+
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 4rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .date-label {
+            font-size: 1.2rem;
+            letter-spacing: 3px;
+            margin-bottom: 40px;
+            text-transform: uppercase;
+        }
+
+        .countdown-container {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .time-box {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 10px;
+            min-width: 100px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .number {
+            font-size: 3rem;
+            font-weight: 600;
+            display: block;
+        }
+
+        .label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 2.5rem; }
+            .number { font-size: 2rem; }
+            .time-box { min-width: 70px; padding: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Save the Date</h1>
+    <div class="date-label">June 19, 2026</div>
+
+    <div class="countdown-container">
+        <div class="time-box">
+            <span class="number" id="days">00</span>
+            <span class="label">Days</span>
+        </div>
+        <div class="time-box">
+            <span class="number" id="hours">00</span>
+            <span class="label">Hours</span>
+        </div>
+        <div class="time-box">
+            <span class="number" id="minutes">00</span>
+            <span class="label">Min</span>
+        </div>
+        <div class="time-box">
+            <span class="number" id="seconds">00</span>
+            <span class="label">Sec</span>
+        </div>
+    </div>
+
+    <script>
+        const weddingDate = new Date("June 19, 2026 00:00:00").getTime();
+
+        const timer = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = weddingDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("days").innerHTML = days;
+            document.getElementById("hours").innerHTML = hours;
+            document.getElementById("minutes").innerHTML = minutes;
+            document.getElementById("seconds").innerHTML = seconds;
+
+            if (distance < 0) {
+                clearInterval(timer);
+                document.querySelector(".countdown-container").innerHTML = "<h2>The Big Day is Here!</h2>";
+            }
+        }, 1000);
+    </script>
+</body>
+</html>

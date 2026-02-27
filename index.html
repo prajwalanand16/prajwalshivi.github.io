@@ -14,46 +14,62 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            /* Using your local image Love_1.JPG */
             background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
-                        url('https://images.unsplash.com/photo-1519741497674-611481863552?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
+                        url('Love_1.JPG');
             background-size: cover;
             background-position: center;
             color: white;
             font-family: 'Montserrat', sans-serif;
             text-align: center;
             overflow: hidden;
+            position: relative;
         }
 
-        /* Top Bar for Corner Dates */
-        .header-meta {
+        /* Floating Hearts Animation */
+        .heart {
             position: absolute;
-            top: 0;
+            font-size: 18px;
+            user-select: none;
+            pointer-events: none;
+            animation: float 10s linear infinite;
+            z-index: 1;
+            filter: drop-shadow(0 0 5px rgba(0,0,0,0.3));
+        }
+
+        @keyframes float {
+            0% { transform: translateY(110vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.8; }
+            90% { opacity: 0.8; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Corner Milestones */
+        .header-meta, .footer-meta {
+            position: absolute;
             width: 100%;
             display: flex;
             justify-content: space-between;
-            padding: 20px;
+            padding: 20px 40px;
             box-sizing: border-box;
             font-size: 0.85rem;
             letter-spacing: 1px;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.4), transparent);
+            z-index: 2;
         }
 
-        .meta-item {
-            text-align: center;
-        }
+        .header-meta { top: 0; background: linear-gradient(to bottom, rgba(0,0,0,0.4), transparent); }
+        .footer-meta { bottom: 0; background: linear-gradient(to top, rgba(0,0,0,0.4), transparent); }
 
-        .meta-item span {
-            display: block;
-            font-weight: 600;
-            font-size: 1.1rem;
-        }
+        .meta-item { text-align: center; }
+        .meta-item span { display: block; font-weight: 600; font-size: 1.1rem; }
 
-        /* Main Names and Titles */
+        /* Typography */
         .names {
             font-family: 'Dancing Script', cursive;
             font-size: 4.5rem;
             margin-bottom: 0;
             text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
+            z-index: 2;
         }
 
         h1 {
@@ -63,6 +79,7 @@
             font-size: 1.2rem;
             margin-top: 0;
             margin-bottom: 20px;
+            z-index: 2;
         }
 
         .quote {
@@ -72,13 +89,15 @@
             margin: 0 auto 40px auto;
             opacity: 0.9;
             line-height: 1.6;
+            z-index: 2;
         }
 
-        /* Countdown Styles */
+        /* Countdown */
         .countdown-container {
             display: flex;
             gap: 15px;
             justify-content: center;
+            z-index: 2;
         }
 
         .time-box {
@@ -90,95 +109,132 @@
             min-width: 80px;
         }
 
-        .number {
-            font-size: 2.5rem;
-            font-weight: 600;
-            display: block;
+        .number { font-size: 2.5rem; font-weight: 600; display: block; }
+        .label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; }
+
+        /* Buttons */
+        .btn-container {
+            margin-top: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: center;
+            z-index: 2;
         }
 
-        .label {
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
+        .action-btn {
+            background: rgba(255,255,255,0.2);
+            border: 1px solid white;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-family: 'Montserrat';
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            width: fit-content;
         }
 
-        @media (max-width: 600px) {
+        .action-btn:hover {
+            background: rgba(255,255,255,0.4);
+            transform: scale(1.05);
+        }
+
+        .loc-btn {
+            background: rgba(255, 215, 0, 0.2);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(255, 255, 255, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
+        }
+
+        @media (max-width: 768px) {
             .names { font-size: 3rem; }
-            .header-meta { flex-direction: column; gap: 10px; top: 10px; }
-            .countdown-container { gap: 10px; }
-            .time-box { padding: 10px; min-width: 60px; }
+            .header-meta, .footer-meta { 
+                flex-direction: column; 
+                gap: 10px; 
+                padding: 15px; 
+                position: relative; 
+                background: none; 
+            }
+            body { height: auto; padding: 50px 0; overflow-y: auto; }
+            .footer-meta { margin-top: 40px; }
         }
     </style>
 </head>
 <body>
 
     <div class="header-meta">
-        <div class="meta-item">
-            <span>A3 29</span>
-            29th November 2025
-        </div>
-        <div class="meta-item">
-            <span>Fiance era started</span>
-            24th January 2026
-        </div>
-        <div class="meta-item">
-            <span>18:29</span>
-            25th November 2025
-        </div>
+        <div class="meta-item"><span>A3 29</span>29th November 2025</div>
+        <div class="meta-item"><span>Fiance era started</span>24th January 2026</div>
+        <div class="meta-item"><span>18:29</span>25th November 2025</div>
     </div>
 
     <div class="names">Prajwal & Shiwangi</div>
-    
-    <div class="quote">
-        "Once in a while, right in the middle of an ordinary life, love gives us a fairytale."
-    </div>
-    
+    <div class="quote">"Once in a while, right in the middle of an ordinary life, love gives us a fairytale."</div>
     <h1>Save the Date - June 19th, 2026</h1>
     
     <div class="countdown-container">
-        <div class="time-box">
-            <span class="number" id="days">00</span>
-            <span class="label">Days</span>
-        </div>
-        <div class="time-box">
-            <span class="number" id="hours">00</span>
-            <span class="label">Hrs</span>
-        </div>
-        <div class="time-box">
-            <span class="number" id="minutes">00</span>
-            <span class="label">Min</span>
-        </div>
-        <div class="time-box">
-            <span class="number" id="seconds">00</span>
-            <span class="label">Sec</span>
-        </div>
+        <div class="time-box"><span class="number" id="days">00</span><span class="label">Days</span></div>
+        <div class="time-box"><span class="number" id="hours">00</span><span class="label">Hrs</span></div>
+        <div class="time-box"><span class="number" id="minutes">00</span><span class="label">Min</span></div>
+        <div class="time-box"><span class="number" id="seconds">00</span><span class="label">Sec</span></div>
     </div>
     
-    <div style="margin-top: 30px;">
-    <button id="musicToggle" onclick="toggleMusic()" style="background: rgba(255,255,255,0.2); border: 1px solid white; color: white; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-family: 'Montserrat';">
-        🎵 Play Our Song
-    </button>
+    <div class="btn-container">
+        <button id="musicToggle" class="action-btn" onclick="toggleMusic()">🎵 Play Our Song</button>
+        <a href="https://maps.app.goo.gl/D93EH4ziLjMuPRrc8" target="_blank" class="action-btn loc-btn">📍 City Club, Lucknow</a>
+    </div>
+
     <audio id="weddingSong" loop>
         <source src="Chann Vi Gawah - Madhav Mahajan.mp3" type="audio/mpeg">
     </audio>
-</div>
+
+    <div class="footer-meta">
+        <div class="meta-item"><span>3rd November 2025</span></div>
+        <div class="meta-item"><span>Rokafied</span>28th November 2025</div>
+        <div class="meta-item"><span>16th November 2025</span></div>
+    </div>
 
     <script>
-        const weddingDate = new Date("June 19, 2026 00:00:00").getTime();
+        // Hearts Logic
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤️';
+            const colors = ['rgba(255, 182, 193, 0.8)', 'rgba(255, 0, 0, 0.7)', 'rgba(255, 215, 0, 0.8)', 'rgba(255, 105, 180, 0.7)'];
+            heart.style.color = colors[Math.floor(Math.random() * colors.length)];
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.fontSize = Math.random() * 10 + 15 + "px";
+            heart.style.animationDuration = Math.random() * 3 + 8 + "s";
+            document.body.appendChild(heart);
+            setTimeout(() => { heart.remove(); }, 11000);
+        }
+        setInterval(createHeart, 600);
 
-        setInterval(function() {
+        // Countdown Logic
+        const weddingDate = new Date("June 19, 2026 00:00:00").getTime();
+        function update() {
             const now = new Date().getTime();
             const distance = weddingDate - now;
+            if (distance > 0) {
+                document.getElementById("days").innerHTML = Math.floor(distance / (1000 * 60 * 60 * 24));
+                document.getElementById("hours").innerHTML = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                document.getElementById("minutes").innerHTML = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                document.getElementById("seconds").innerHTML = Math.floor((distance % (1000 * 60)) / 1000);
+            }
+        }
+        setInterval(update, 1000);
+        update();
 
-            document.getElementById("days").innerHTML = Math.floor(distance / (1000 * 60 * 60 * 24));
-            document.getElementById("hours").innerHTML = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            document.getElementById("minutes").innerHTML = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            document.getElementById("seconds").innerHTML = Math.floor((distance % (1000 * 60)) / 1000);
-        }, 1000);
+        // Music Toggle Logic
         function toggleMusic() {
             const song = document.getElementById("weddingSong");
             const btn = document.getElementById("musicToggle");
-            
             if (song.paused) {
                 song.play();
                 btn.innerHTML = "⏸ Pause Music";

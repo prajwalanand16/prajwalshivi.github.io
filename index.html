@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Our Big Day | Countdown</title>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@300;600&display=swap" rel="stylesheet">
+    <title>Prajwal & Shiwangi | Our Big Day</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         body {
             margin: 0;
@@ -14,68 +14,125 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), 
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
                         url('https://images.unsplash.com/photo-1519741497674-611481863552?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
             background-size: cover;
             background-position: center;
             color: white;
             font-family: 'Montserrat', sans-serif;
             text-align: center;
+            overflow: hidden;
+        }
+
+        /* Top Bar for Corner Dates */
+        .header-meta {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+            box-sizing: border-box;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.4), transparent);
+        }
+
+        .meta-item {
+            text-align: center;
+        }
+
+        .meta-item span {
+            display: block;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        /* Main Names and Titles */
+        .names {
+            font-family: 'Dancing Script', cursive;
+            font-size: 4.5rem;
+            margin-bottom: 0;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
         }
 
         h1 {
-            font-family: 'Dancing Script', cursive;
-            font-size: 4rem;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-        }
-
-        .date-label {
-            font-size: 1.2rem;
-            letter-spacing: 3px;
-            margin-bottom: 40px;
+            font-weight: 300;
             text-transform: uppercase;
+            letter-spacing: 5px;
+            font-size: 1.2rem;
+            margin-top: 0;
+            margin-bottom: 20px;
         }
 
+        .quote {
+            font-style: italic;
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto 40px auto;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        /* Countdown Styles */
         .countdown-container {
             display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
+            gap: 15px;
             justify-content: center;
         }
 
         .time-box {
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px);
-            padding: 20px;
-            border-radius: 10px;
-            min-width: 100px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(8px);
+            padding: 15px 25px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            min-width: 80px;
         }
 
         .number {
-            font-size: 3rem;
+            font-size: 2.5rem;
             font-weight: 600;
             display: block;
         }
 
         .label {
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             text-transform: uppercase;
             letter-spacing: 2px;
         }
 
         @media (max-width: 600px) {
-            h1 { font-size: 2.5rem; }
-            .number { font-size: 2rem; }
-            .time-box { min-width: 70px; padding: 10px; }
+            .names { font-size: 3rem; }
+            .header-meta { flex-direction: column; gap: 10px; top: 10px; }
+            .countdown-container { gap: 10px; }
+            .time-box { padding: 10px; min-width: 60px; }
         }
     </style>
 </head>
 <body>
 
+    <div class="header-meta">
+        <div class="meta-item">
+            <span>A3 29</span>
+            29th November 2025
+        </div>
+        <div class="meta-item">
+            <span>Fiance era started</span>
+            24th January 2026
+        </div>
+        <div class="meta-item">
+            <span>18:29</span>
+            25th November 2025
+        </div>
+    </div>
+
+    <div class="names">Prajwal & Shiwangi</div>
     <h1>Save the Date</h1>
-    <div class="date-label">June 19, 2026</div>
+    
+    <div class="quote">
+        "Once in a while, right in the middle of an ordinary life, love gives us a fairytale."
+    </div>
 
     <div class="countdown-container">
         <div class="time-box">
@@ -84,7 +141,7 @@
         </div>
         <div class="time-box">
             <span class="number" id="hours">00</span>
-            <span class="label">Hours</span>
+            <span class="label">Hrs</span>
         </div>
         <div class="time-box">
             <span class="number" id="minutes">00</span>
@@ -99,24 +156,14 @@
     <script>
         const weddingDate = new Date("June 19, 2026 00:00:00").getTime();
 
-        const timer = setInterval(function() {
+        setInterval(function() {
             const now = new Date().getTime();
             const distance = weddingDate - now;
 
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-            document.getElementById("days").innerHTML = days;
-            document.getElementById("hours").innerHTML = hours;
-            document.getElementById("minutes").innerHTML = minutes;
-            document.getElementById("seconds").innerHTML = seconds;
-
-            if (distance < 0) {
-                clearInterval(timer);
-                document.querySelector(".countdown-container").innerHTML = "<h2>The Big Day is Here!</h2>";
-            }
+            document.getElementById("days").innerHTML = Math.floor(distance / (1000 * 60 * 60 * 24));
+            document.getElementById("hours").innerHTML = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            document.getElementById("minutes").innerHTML = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            document.getElementById("seconds").innerHTML = Math.floor((distance % (1000 * 60)) / 1000);
         }, 1000);
     </script>
 </body>

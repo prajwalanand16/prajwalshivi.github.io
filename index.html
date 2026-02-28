@@ -12,7 +12,7 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            background: #1a1a1a; /* Backup color */
+            background: #1a1a1a;
             color: white;
             font-family: 'Montserrat', sans-serif;
             text-align: center;
@@ -20,7 +20,6 @@
             overflow-y: auto;
         }
 
-        /* Hero Section (The Landing Page) */
         .hero {
             height: 100vh;
             width: 100%;
@@ -36,7 +35,6 @@
             flex-shrink: 0;
         }
 
-        /* Floating Hearts Animation */
         .heart {
             position: absolute;
             font-size: 18px;
@@ -54,7 +52,6 @@
             100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
         }
 
-        /* Corner Milestones */
         .header-meta, .footer-meta {
             position: absolute;
             width: 100%;
@@ -143,15 +140,15 @@
 
         /* Timeline Section */
         .timeline-section {
-            padding: 80px 20px;
+            padding: 100px 20px;
             background: #121212;
             width: 100%;
             box-sizing: border-box;
         }
 
         .chapter-card {
-            max-width: 900px;
-            margin: 0 auto;
+            max-width: 1000px;
+            margin: 0 auto 100px auto;
             background: rgba(255, 255, 255, 0.05);
             border-radius: 30px;
             padding: 50px 30px;
@@ -172,6 +169,10 @@
             align-items: center;
             text-align: left;
         }
+
+        /* Alternating layout for Chapter 2 */
+        .reverse-grid { direction: rtl; }
+        .reverse-grid .story-text { direction: ltr; }
 
         .story-text {
             line-height: 1.8;
@@ -203,6 +204,7 @@
             .names { font-size: 3rem; }
             .header-meta, .footer-meta { position: relative; flex-direction: column; gap: 15px; background: none; padding: 20px; }
             .story-grid { grid-template-columns: 1fr; }
+            .reverse-grid { direction: ltr; }
             .chapter-title { font-size: 2.5rem; }
         }
     </style>
@@ -213,7 +215,7 @@
         <div class="header-meta">
             <div class="meta-item"><span>A3 29</span>29th November 2025</div>
             <div class="meta-item"><span>Fiance era started</span>24th January 2026</div>
-            <div class="meta-item"><span>18:29</span></div>
+            <div class="meta-item"><span>18:29</span>25th November 2025</div>
         </div>
 
         <div class="names">Prajwal & Shiwangi</div>
@@ -231,9 +233,7 @@
             <a href="https://maps.app.goo.gl/D93EH4ziLjMuPRrc8" target="_blank" class="action-btn loc-btn">📍 City Club, Lucknow</a>
         </div>
 
-        <div style="margin-top: 40px; font-size: 0.9rem; opacity: 0.7; animation: bounce 2s infinite;">
-            Scroll to see our story ↓
-        </div>
+        <div style="margin-top: 40px; font-size: 0.9rem; opacity: 0.7;">Scroll to see our story ↓</div>
 
         <div class="footer-meta">
             <div class="meta-item"><span>3rd November 2025</span></div>
@@ -247,14 +247,36 @@
             <div class="chapter-title">Chapter 1: The First Hello</div>
             <div class="story-grid">
                 <div class="story-text">
-                    It all started on <b>November 3rd</b> with a simple WhatsApp text: <i>"Hi Shiwangi, It's Prajwal this side!"</i>. By 9:30 PM that night, we were on a call that felt like a conversation with a soul I had known for lifetimes.
+                    It all started on <b>November 3rd</b> with a simple WhatsApp text. By 9:30 PM that night, we were on a call that felt like a reunion with a soul I had known for lifetimes.
                     <br><br>
-                    By <b>November 16th</b>, we were so sure of "us" that my parents traveled to Shahganj to meet her family. Seeing her radiance and happiness while meeting them, even while I was miles away in Pune, was the moment our fairytale truly began.
+                    The magic was instant. On the third day, Shiwangi won my heart completely by <b>ordering me lunch via Zomato</b> during a busy work shift.
+                    <br><br>
+                    By <b>November 16th</b>, our parents met in Shahganj while I was in Pune. Seeing her radiant happiness while meeting my family was the moment our fairytale truly began.
                 </div>
                 <div class="photo-stack">
-                    <img src="Love_2.JPG" alt="First Hello" class="story-img" title="The First Hello">
-                    <img src="Love_3.JPG" alt="Leap of Faith" class="story-img" title="A Leap of Faith">
-                    <img src="Love_4.JPG" alt="Family Union" class="story-img full-img" title="The Family Union">
+                    <img src="Love_2.JPG" alt="First Hello" class="story-img">
+                    <img src="Love_3.JPG" alt="Leap of Faith" class="story-img">
+                    <img src="Love_4.JPG" alt="Family Union" class="story-img full-img">
+                </div>
+            </div>
+        </div>
+
+        <div class="chapter-card">
+            <div class="chapter-title">Chapter 2: Written in the Stars</div>
+            <div class="story-grid reverse-grid">
+                <div class="story-text">
+                    <b>The Big "Yes":</b> After my parents' glowing review of their first meeting and learning about Shivi and her side of the family being very happy as well, I flew from Pune to Lucknow on <b>November 25th</b>. Three days later, at Phoenix Mall, my father asked the ultimate question: "Are you sure?" My answer was instant: "100%."  <b>The Starbucks Interlude:</b> While our families prepared the shagun, Shiwangi and I stole forty minutes at Starbucks and had our moments. We didn't need much time to decide—we already knew. <b>The Roka:</b>When we joined the families at the food court, we both said "Yes" to a lifetime together. The Tika and Mithai made it official: we were <b>Rokafied</b>.
+                    <br><br>
+                    <b>The Parking Lot Sign:</b> As we headed home, we found our cars parked side-by-side in a massive, four-story parking lot of the mall. Out of hundreds of spots, the universe put our families right next to each other. It was like the universe approved our decision in a mysterious way.
+                    <br><br>
+                    <b> The First Date & The Journey:</b>  On <b> November 29th</b>, Shiwangi arrived in a beautiful Chikan Kurta in Lucknow in the evening. We had our first official date at The Hazelnut Factory in Hazratganj before heading to the station.
+                    <br><br>
+                    <b> Berth A3-29:</b>  Sitting arm-in-arm on Platform 1, we waited for the 11:30 PM train. We settled into Coach <b>A3, Berth 29</b>. That overnight journey to Delhi wasn't just a trip; it was our first time traveling as a couple, heading toward a future.
+                </div>
+                <div class="photo-stack">
+                    <img src="Love_5.JPG" alt="Roka Ceremony" class="story-img">
+                    <img src="Love_6.JPG" alt="Hazelnut Factory" class="story-img">
+                    <img src="Love_7.JPG" alt="Train Journey" class="story-img full-img">
                 </div>
             </div>
         </div>

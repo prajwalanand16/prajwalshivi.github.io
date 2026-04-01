@@ -18,8 +18,8 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
-                        url('Love_1.JPG'); /* Uses your existing main photo */
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
+                        url('Love_1.JPG');
             background-size: cover;
             background-position: center;
             font-family: 'Montserrat', sans-serif;
@@ -29,144 +29,154 @@
         }
 
         .invite-card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(15px);
-            padding: 50px 40px;
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            max-width: 500px;
-            width: 90%;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-            animation: fadeIn 1.5s ease-out;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            padding: 60px 40px;
+            border-radius: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            max-width: 450px;
+            width: 85%;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+            animation: fadeIn 1.2s ease-out;
             z-index: 2;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
         }
 
         .script-font {
             font-family: 'Dancing Script', cursive;
-            font-size: 3.5rem;
+            font-size: 3.8rem;
             color: var(--gold);
-            margin: 0;
+            margin: 10px 0;
+            text-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
         }
 
         h2 {
             font-weight: 300;
-            letter-spacing: 4px;
+            letter-spacing: 3px;
             text-transform: uppercase;
-            font-size: 1rem;
-            margin-top: 10px;
+            font-size: 0.85rem;
+            opacity: 0.8;
         }
 
         .details {
-            margin: 30px 0;
+            margin: 35px 0;
             font-size: 1.1rem;
-            line-height: 2;
-            border-top: 1px solid rgba(255,255,255,0.2);
-            border-bottom: 1px solid rgba(255,255,255,0.2);
-            padding: 20px 0;
+            line-height: 2.2;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding: 25px 0;
         }
 
         .details b {
             color: var(--gold);
             display: block;
-            font-size: 1.4rem;
+            font-size: 1.5rem;
             letter-spacing: 2px;
+            margin: 5px 0;
         }
 
         .btn-group {
             display: flex;
             flex-direction: column;
             gap: 15px;
-            margin-top: 30px;
+            margin-top: 20px;
         }
 
         .btn {
-            padding: 12px 25px;
-            border-radius: 30px;
+            padding: 14px 20px;
+            border-radius: 50px;
             text-decoration: none;
             font-size: 0.9rem;
             font-weight: 600;
-            transition: 0.3s;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             cursor: pointer;
             border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
 
+        /* RSVP Button Style */
         .btn-rsvp {
-            background-color: #25D366; /* WhatsApp Green */
-            color: white;
-            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+            background: var(--gold);
+            color: #000;
+            box-shadow: 0 8px 20px rgba(212, 175, 55, 0.2);
         }
 
         .btn-calendar {
-            background-color: transparent;
-            border: 1px solid white;
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.4);
             color: white;
         }
 
         .btn:hover {
-            transform: scale(1.05);
-            opacity: 0.9;
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.3);
         }
 
-        /* Floating Animation Elements */
         .decoration {
             position: absolute;
             pointer-events: none;
-            animation: float 8s infinite linear;
+            animation: float 10s infinite linear;
             color: var(--gold);
-            opacity: 0.6;
+            opacity: 0.4;
         }
 
         @keyframes float {
-            0% { transform: translateY(100vh) rotate(0deg); }
-            100% { transform: translateY(-10vh) rotate(360deg); }
+            0% { transform: translateY(110vh) rotate(0deg); opacity: 0; }
+            20% { opacity: 0.4; }
+            80% { opacity: 0.4; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
         }
 
         @media (max-width: 480px) {
-            .script-font { font-size: 2.8rem; }
-            .invite-card { padding: 30px 20px; }
+            .script-font { font-size: 3rem; }
+            .invite-card { padding: 40px 25px; }
         }
     </style>
 </head>
 <body>
 
     <div class="invite-card">
-        <h2>We invite you to celebrate the wedding of</h2>
+        <h2>Save the Date for</h2>
         <h1 class="script-font">Prajwal & Shiwangi</h1>
         
         <div class="details">
             Friday
             <b>June 19th, 2026</b>
+            From 6:00 PM Onwards
+            <br>
             City Club, Lucknow
         </div>
 
         <div class="btn-group">
-            <a href="https://wa.me/919044894426?text=Hi%20Prajwal%20%26%20Shiwangi%2C%20I%20will%20be%20attending%20your%20wedding%20on%20June%2019th%21%20Name%3A" class="btn btn-rsvp">
-                ✅ Confirm Attendance (RSVP)
+            <a href="YOUR_GOOGLE_FORM_LINK" target="_blank" class="btn btn-rsvp">
+                ✨ Click Here to RSVP
             </a>
 
-            <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Wedding+of+Prajwal+and+Shiwangi&dates=20260619T133000Z/20260619T183000Z&details=Celebrating+the+wedding+of+Prajwal+and+Shiwangi+at+City+Club+Lucknow&location=City+Club,+Lucknow" target="_blank" class="btn btn-calendar">
+            <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Wedding+of+Prajwal+and+Shiwangi&dates=20260619T123000Z/20260619T183000Z&details=Celebrating+the+wedding+of+Prajwal+and+Shiwangi+at+City+Club+Lucknow&location=City+Club,+Lucknow" target="_blank" class="btn btn-calendar">
                 📅 Add to Calendar
             </a>
         </div>
     </div>
 
     <script>
-        function createGoldHeart() {
-            const heart = document.createElement('div');
-            heart.classList.add('decoration');
-            heart.innerHTML = '✨';
-            heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
-            heart.style.animationDuration = (Math.random() * 5 + 5) + 's';
-            document.body.appendChild(heart);
-            setTimeout(() => heart.remove(), 8000);
+        function createDeco() {
+            const deco = document.createElement('div');
+            deco.classList.add('decoration');
+            deco.innerHTML = Math.random() > 0.5 ? '✨' : '🥂';
+            deco.style.left = Math.random() * 100 + 'vw';
+            deco.style.fontSize = (Math.random() * 15 + 10) + 'px';
+            deco.style.animationDuration = (Math.random() * 6 + 7) + 's';
+            document.body.appendChild(deco);
+            setTimeout(() => deco.remove(), 10000);
         }
-        setInterval(createGoldHeart, 500);
+        setInterval(createDeco, 700);
     </script>
 </body>
 </html>

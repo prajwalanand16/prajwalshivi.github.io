@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wedding Invitation | Prajwal & Shiwangi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold: #d4af37;
+            --soft-white: #f8f9fa;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
+                        url('Love_1.JPG'); /* Uses your existing main photo */
+            background-size: cover;
+            background-position: center;
+            font-family: 'Montserrat', sans-serif;
+            color: white;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .invite-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            padding: 50px 40px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            animation: fadeIn 1.5s ease-out;
+            z-index: 2;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .script-font {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.5rem;
+            color: var(--gold);
+            margin: 0;
+        }
+
+        h2 {
+            font-weight: 300;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            font-size: 1rem;
+            margin-top: 10px;
+        }
+
+        .details {
+            margin: 30px 0;
+            font-size: 1.1rem;
+            line-height: 2;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            padding: 20px 0;
+        }
+
+        .details b {
+            color: var(--gold);
+            display: block;
+            font-size: 1.4rem;
+            letter-spacing: 2px;
+        }
+
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: 0.3s;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-rsvp {
+            background-color: #25D366; /* WhatsApp Green */
+            color: white;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+        }
+
+        .btn-calendar {
+            background-color: transparent;
+            border: 1px solid white;
+            color: white;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            opacity: 0.9;
+        }
+
+        /* Floating Animation Elements */
+        .decoration {
+            position: absolute;
+            pointer-events: none;
+            animation: float 8s infinite linear;
+            color: var(--gold);
+            opacity: 0.6;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); }
+            100% { transform: translateY(-10vh) rotate(360deg); }
+        }
+
+        @media (max-width: 480px) {
+            .script-font { font-size: 2.8rem; }
+            .invite-card { padding: 30px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="invite-card">
+        <h2>We invite you to celebrate the wedding of</h2>
+        <h1 class="script-font">Prajwal & Shiwangi</h1>
+        
+        <div class="details">
+            Friday
+            <b>June 19th, 2026</b>
+            City Club, Lucknow
+        </div>
+
+        <div class="btn-group">
+            <a href="https://wa.me/919044894426?text=Hi%20Prajwal%20%26%20Shiwangi%2C%20I%20will%20be%20attending%20your%20wedding%20on%20June%2019th%21%20Name%3A" class="btn btn-rsvp">
+                ✅ Confirm Attendance (RSVP)
+            </a>
+
+            <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Wedding+of+Prajwal+and+Shiwangi&dates=20260619T133000Z/20260619T183000Z&details=Celebrating+the+wedding+of+Prajwal+and+Shiwangi+at+City+Club+Lucknow&location=City+Club,+Lucknow" target="_blank" class="btn btn-calendar">
+                📅 Add to Calendar
+            </a>
+        </div>
+    </div>
+
+    <script>
+        function createGoldHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('decoration');
+            heart.innerHTML = '✨';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
+            heart.style.animationDuration = (Math.random() * 5 + 5) + 's';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 8000);
+        }
+        setInterval(createGoldHeart, 500);
+    </script>
+</body>
+</html>

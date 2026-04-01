@@ -4,11 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wedding Invitation | Prajwal & Shiwangi</title>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@200;300;400;600&display=swap" rel="stylesheet">
     <style>
         :root {
             --gold: #d4af37;
-            --soft-white: #f8f9fa;
+            --soft-gold: rgba(212, 175, 55, 0.4);
+            --bg-overlay: rgba(0, 0, 0, 0.7);
         }
 
         body {
@@ -18,8 +19,10 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
-                        url('Love_1.JPG');
+            background-color: #000;
+            background-image: 
+                linear-gradient(var(--bg-overlay), var(--bg-overlay)),
+                url('Love_1.JPG');
             background-size: cover;
             background-position: center;
             font-family: 'Montserrat', sans-serif;
@@ -28,71 +31,116 @@
             text-align: center;
         }
 
-        .invite-card {
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(20px);
-            padding: 60px 40px;
-            border-radius: 25px;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            max-width: 450px;
-            width: 85%;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
-            animation: fadeIn 1.2s ease-out;
+        .container {
+            position: relative;
             z-index: 2;
+            animation: cardEntrance 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+            perspective: 1000px;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
+        .invite-card {
+            background: rgba(25, 25, 25, 0.4);
+            backdrop-filter: blur(25px);
+            padding: 60px 45px;
+            border-radius: 4px; /* Stronger, geometric shape */
+            border: 1px solid var(--soft-gold);
+            max-width: 420px;
+            width: 85%;
+            box-shadow: 
+                0 0 100px rgba(0,0,0,0.8),
+                0 0 20px rgba(212, 175, 55, 0.1) inset;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Geometric corner accents */
+        .invite-card::before, .invite-card::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-style: solid;
+            border-color: var(--gold);
+            opacity: 0.6;
+        }
+
+        .invite-card::before { top: 15px; left: 15px; border-width: 1px 0 0 1px; }
+        .invite-card::after { bottom: 15px; right: 15px; border-width: 0 1px 1px 0; }
+
+        @keyframes cardEntrance {
+            from { opacity: 0; transform: translateY(40px) scale(0.9) rotateX(10deg); }
+            to { opacity: 1; transform: translateY(0) scale(1) rotateX(0deg); }
         }
 
         .script-font {
             font-family: 'Dancing Script', cursive;
-            font-size: 3.8rem;
+            font-size: 4rem;
             color: var(--gold);
-            margin: 10px 0;
-            text-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+            margin: 15px 0 35px 0;
+            line-height: 1.1;
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
         }
 
         h2 {
-            font-weight: 300;
-            letter-spacing: 3px;
+            font-weight: 200;
+            letter-spacing: 5px;
             text-transform: uppercase;
-            font-size: 0.85rem;
-            opacity: 0.8;
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.7);
+        }
+
+        .divider {
+            width: 80px;
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--soft-gold), transparent);
+            margin: 0 auto;
         }
 
         .details {
-            margin: 35px 0;
-            font-size: 1.1rem;
-            line-height: 2.2;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            padding: 25px 0;
+            margin: 40px 0;
+            font-size: 1.05rem;
+            line-height: 2.3;
+            font-weight: 300;
+            color: rgba(255,255,255,0.9);
         }
 
         .details b {
             color: var(--gold);
             display: block;
-            font-size: 1.5rem;
-            letter-spacing: 2px;
-            margin: 5px 0;
+            font-size: 1.6rem;
+            letter-spacing: 3px;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin: 5px 0 10px 0;
         }
+
+        .venue {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-size: 1.1rem;
+            margin-top: 10px;
+            letter-spacing: 1px;
+        }
+
+        .venue span { color: var(--gold); font-size: 1.2rem; }
 
         .btn-group {
             display: flex;
             flex-direction: column;
-            gap: 15px;
-            margin-top: 20px;
+            gap: 18px;
+            margin-top: 25px;
         }
 
         .btn {
-            padding: 14px 20px;
-            border-radius: 50px;
+            padding: 16px 20px;
             text-decoration: none;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 600;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: all 0.5s ease;
             cursor: pointer;
             border: none;
             display: flex;
@@ -101,82 +149,117 @@
             gap: 10px;
         }
 
-        /* RSVP Button Style */
+        /* The Confirmation Portal (RSVP) Button */
         .btn-rsvp {
-            background: var(--gold);
+            background-color: var(--gold);
             color: #000;
-            box-shadow: 0 8px 20px rgba(212, 175, 55, 0.2);
+            border: 1px solid var(--gold);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.15);
         }
 
         .btn-calendar {
-            background-color: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.4);
+            background-color: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.2);
             color: white;
         }
 
         .btn:hover {
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 12px 25px rgba(0,0,0,0.3);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+            letter-spacing: 3px; /* Subtle growth on hover */
         }
 
-        .decoration {
+        /* Enhanced Floating Particles (Gold Dust) */
+        .deco-wrapper {
             position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
             pointer-events: none;
-            animation: float 10s infinite linear;
-            color: var(--gold);
-            opacity: 0.4;
+            z-index: 1;
         }
 
-        @keyframes float {
-            0% { transform: translateY(110vh) rotate(0deg); opacity: 0; }
-            20% { opacity: 0.4; }
-            80% { opacity: 0.4; }
-            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        .deco-point {
+            position: absolute;
+            background-color: var(--gold);
+            border-radius: 50%;
+            animation: dustFloat 12s infinite linear;
+            filter: blur(1px);
+        }
+
+        @keyframes dustFloat {
+            0% { transform: translateY(105vh) scale(0.8); opacity: 0; }
+            10% { opacity: 0.3; }
+            80% { opacity: 0.3; }
+            100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
         }
 
         @media (max-width: 480px) {
-            .script-font { font-size: 3rem; }
-            .invite-card { padding: 40px 25px; }
+            .script-font { font-size: 3.2rem; }
+            .invite-card { padding: 45px 30px; }
+            .details b { font-size: 1.4rem; }
         }
     </style>
 </head>
 <body>
 
-    <div class="invite-card">
-        <h2>Save the Date for</h2>
-        <h1 class="script-font">Prajwal & Shiwangi</h1>
-        
-        <div class="details">
-            Friday
-            <b>June 19th, 2026</b>
-            From 6:00 PM Onwards
-            <br>
-            City Club, Lucknow
-        </div>
+    <div class="deco-wrapper" id="dust-field"></div>
 
-        <div class="btn-group">
-            <a href="https://forms.gle/ZJkEGM6nQb31Jrxq7" target="_blank" class="btn btn-rsvp">
-                ✨ Click Here to RSVP
-            </a>
+    <div class="container">
+        <div class="invite-card">
+            <h2>Please Save the Date for the Wedding of</h2>
+            <div class="divider"></div>
+            <h1 class="script-font">Prajwal & Shiwangi</h1>
+            
+            <div class="details">
+                Friday
+                <b>June 19th, 2026</b>
+                <div class="divider"></div>
+                <div class="venue">
+                    <span>📍</span>City Club, Lucknow
+                </div>
+                18:00 HRS ONWARDS
+            </div>
 
-            <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Wedding+of+Prajwal+and+Shiwangi&dates=20260619T123000Z/20260619T183000Z&details=Celebrating+the+wedding+of+Prajwal+and+Shiwangi+at+City+Club+Lucknow&location=City+Club,+Lucknow" target="_blank" class="btn btn-calendar">
-                📅 Add to Calendar
-            </a>
+            <div class="btn-group">
+                <a href="https://forms.gle/6qSkBotyLa319D5D9" target="_blank" class="btn btn-rsvp">
+                    ✨ THE CONFIRMATION PORTAL (RSVP)
+                </a>
+
+                <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Wedding+of+Prajwal+and+Shiwangi&dates=20260619T123000Z/20260619T183000Z&details=Celebrating+the+wedding+of+Prajwal+and+Shiwangi+at+City+Club+Lucknow&location=City+Club,+Lucknow" target="_blank" class="btn btn-calendar">
+                    📅 ADD TO CALENDAR
+                </a>
+            </div>
         </div>
     </div>
 
     <script>
-        function createDeco() {
-            const deco = document.createElement('div');
-            deco.classList.add('decoration');
-            deco.innerHTML = Math.random() > 0.5 ? '✨' : '🥂';
-            deco.style.left = Math.random() * 100 + 'vw';
-            deco.style.fontSize = (Math.random() * 15 + 10) + 'px';
-            deco.style.animationDuration = (Math.random() * 6 + 7) + 's';
-            document.body.appendChild(deco);
-            setTimeout(() => deco.remove(), 10000);
+        // Parallax particle effect
+        document.addEventListener("mousemove", parallaxEffect);
+        const container = document.querySelector(".container");
+
+        function parallaxEffect(e) {
+            const amount = 20; // How many pixels the card moves
+            const x = (window.innerWidth / 2 - e.pageX) / amount;
+            const y = (window.innerHeight / 2 - e.pageY) / amount;
+            container.style.transform = `translateX(${-x}px) translateY(${-y}px)`;
         }
-        setInterval(createDeco, 700);
+
+        // Particle generator
+        const dustField = document.getElementById('dust-field');
+        function createDustParticle() {
+            const particle = document.createElement('div');
+            particle.classList.add('deco-point');
+            
+            const size = (Math.random() * 4 + 1); // Varied sizes for depth
+            particle.style.width = size + 'px';
+            particle.style.height = size + 'px';
+            
+            particle.style.left = Math.random() * 100 + 'vw';
+            particle.style.animationDuration = (Math.random() * 8 + 6) + 's';
+            
+            dustField.appendChild(particle);
+            setTimeout(() => particle.remove(), 12000);
+        }
+        setInterval(createDustParticle, 250); // Faster interval for denser dust
     </script>
 </body>
 </html>

@@ -9,7 +9,7 @@
         :root {
             --gold: #b89a3d;
             --deep-lavender: #7b5da3;
-            --light-lavender: #f3f0f7; /* Very soft wedding purple */
+            --light-lavender: #f3f0f7;
             --text-dark: #4a4a4a;
         }
 
@@ -24,13 +24,8 @@
             overflow: hidden;
         }
 
-        .wrapper {
-            display: flex;
-            width: 100%;
-            height: 100vh;
-        }
+        .wrapper { display: flex; width: 100%; height: 100vh; }
 
-        /* Photo Column (Left) */
         .photo-column {
             width: 50%;
             height: 100%;
@@ -42,7 +37,6 @@
             z-index: 2;
         }
 
-        /* Content Column (Right) */
         .content-column {
             width: 50%;
             height: 100%;
@@ -52,7 +46,6 @@
             padding: 40px;
             box-sizing: border-box;
             background-color: var(--light-lavender);
-            /* Subtle Wedding Lace Pattern */
             background-image: url("https://www.transparenttextures.com/patterns/cream-pixels.png"); 
             position: relative;
         }
@@ -70,34 +63,39 @@
             font-weight: 400;
             letter-spacing: 3px;
             text-transform: uppercase;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             color: var(--deep-lavender);
             margin-bottom: 10px;
         }
 
         .names {
             font-family: 'Dancing Script', cursive;
-            font-size: 3.2rem; /* Reduced size to fit screen */
+            font-size: 3.2rem;
             color: var(--deep-lavender);
             margin: 5px 0;
-            line-height: 1.2;
         }
+
+        /* Countdown Style */
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+            color: var(--gold);
+            font-weight: 600;
+        }
+        .count-item { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; }
+        .count-item span { display: block; font-size: 1.4rem; }
 
         .divider {
             width: 60px;
-            height: 2px;
+            height: 1px;
             background: var(--gold);
-            margin: 25px auto;
-            opacity: 0.6;
+            margin: 20px auto;
+            opacity: 0.5;
         }
 
-        .details-box {
-            font-size: 1rem;
-            line-height: 1.8;
-            font-weight: 400;
-            color: var(--text-dark);
-        }
-
+        .details-box { font-size: 1rem; line-height: 1.6; }
         .details-box b {
             color: var(--gold);
             display: block;
@@ -110,63 +108,42 @@
             text-decoration: none;
             color: var(--deep-lavender);
             font-weight: 600;
-            font-size: 1.1rem;
-            display: inline-block;
-            margin: 15px 0;
-            transition: 0.3s;
             border-bottom: 1px solid transparent;
+            transition: 0.3s;
         }
-
-        .venue-link:hover {
-            border-bottom: 1px solid var(--deep-lavender);
-        }
+        .venue-link:hover { border-bottom: 1px solid var(--deep-lavender); }
 
         .btn-group {
             display: flex;
             flex-direction: column;
-            gap: 15px;
-            margin-top: 35px;
+            gap: 12px;
+            margin-top: 30px;
             align-items: center;
         }
 
         .btn {
-            padding: 16px 25px;
+            padding: 14px 25px;
             text-decoration: none;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             font-weight: 600;
             letter-spacing: 2px;
             text-transform: uppercase;
             border-radius: 4px;
             width: 100%;
-            max-width: 300px;
-            transition: 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            max-width: 280px;
+            transition: 0.3s;
             text-align: center;
         }
 
-        .btn-rsvp {
-            background-color: var(--deep-lavender);
-            color: white;
-            box-shadow: 0 4px 15px rgba(123, 93, 163, 0.2);
-        }
+        .btn-rsvp { background-color: var(--deep-lavender); color: white; }
+        .btn-calendar { background-color: white; border: 1px solid var(--deep-lavender); color: var(--deep-lavender); }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
 
-        .btn-calendar {
-            background-color: white;
-            border: 1px solid var(--deep-lavender);
-            color: var(--deep-lavender);
-        }
-
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-        }
-
-        /* Responsive Mobile Layout */
         @media (max-width: 850px) {
             .wrapper { flex-direction: column; overflow-y: auto; height: auto; }
-            .photo-column { width: 100%; height: 50vh; }
-            .content-column { width: 100%; height: auto; padding: 50px 20px; }
+            .photo-column { width: 100%; height: 45vh; }
+            .content-column { width: 100%; height: auto; padding: 40px 20px; }
             .names { font-size: 2.8rem; }
-            body { overflow-y: auto; }
         }
     </style>
 </head>
@@ -177,9 +154,15 @@
 
         <div class="content-column">
             <div class="invite-card">
-                <div class="header-msg">You are cordially invited to celebrate the union of</div>
+                <div class="header-msg">Kindly join us for the wedding of</div>
                 
                 <h1 class="names">Prajwal & Shiwangi</h1>
+
+                <div class="countdown" id="timer">
+                    <div class="count-item"><span id="days">00</span>Days</div>
+                    <div class="count-item"><span id="hours">00</span>Hrs</div>
+                    <div class="count-item"><span id="mins">00</span>Min</div>
+                </div>
                 
                 <div class="divider"></div>
                 
@@ -196,16 +179,29 @@
 
                 <div class="btn-group">
                     <a href="https://forms.gle/6qSkBotyLa319D5D9" target="_blank" class="btn btn-rsvp">
-                        ✨ THE CONFIRMATION PORTAL (RSVP)
+                        ✨ THE CONFIRMATION PORTAL
                     </a>
 
-                    <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Wedding+of+Prajwal+and+Shiwangi&dates=20260619T123000Z/20260619T183000Z&details=Celebrating+the+wedding+of+Prajwal+and+Shiwangi+at+City+Club+Lucknow&location=City+Club,+Lucknow" target="_blank" class="btn btn-calendar">
-                        📅 ADD TO CALENDAR
+                    <a href="https://www.google.com/calendar/render?action=TEMPLATE&text=Wedding:+Prajwal+%26+Shiwangi&dates=20260619T123000Z/20260619T183000Z&details=Wedding+Celebration+at+City+Club,+Lucknow&location=City+Club,+Lucknow" target="_blank" class="btn btn-calendar">
+                        📅 SAVE TO CALENDAR
                     </a>
                 </div>
             </div>
         </div>
     </div>
 
+    <script>
+        // Countdown Logic
+        const targetDate = new Date("June 19, 2026 18:00:00").getTime();
+        
+        setInterval(function() {
+            const now = new Date().getTime();
+            const diff = targetDate - now;
+            
+            document.getElementById("days").innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
+            document.getElementById("hours").innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            document.getElementById("mins").innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        }, 1000);
+    </script>
 </body>
 </html>

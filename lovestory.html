@@ -82,7 +82,8 @@
         .hero-bg {
             position: absolute;
             inset: -40px;
-            
+            background: linear-gradient(rgba(250,246,240,0.18), rgba(250,246,240,0.18)),
+                        url('Love_1.JPG') center top/cover no-repeat;
             transform: scale(1.1);
             transition: transform 0.1s linear;
             z-index: 0;
@@ -634,77 +635,7 @@
         #lb-prev { left: 24px; }
         #lb-next { right: 24px; }
 
-        /* ── RSVP ── */
-        .rsvp-section {
-            padding: 100px 20px;
-            background: var(--black-mid);
-            text-align: center;
-        }
 
-        .rsvp-card {
-            max-width: 560px;
-            margin: 0 auto;
-            padding: 60px 50px;
-            border: 1px solid var(--border);
-            background: var(--card-bg);
-            position: relative;
-        }
-        .rsvp-card::before,.rsvp-card::after {
-            content: '';
-            position: absolute;
-            width: 40px; height: 40px;
-            border-color: var(--gold);
-            border-style: solid;
-            opacity: 0.5;
-        }
-        .rsvp-card::before { top: 14px; left: 14px; border-width: 1px 0 0 1px; }
-        .rsvp-card::after  { bottom: 14px; right: 14px; border-width: 0 1px 1px 0; }
-
-        .rsvp-card input, .rsvp-card select, .rsvp-card textarea {
-            width: 100%;
-            background: rgba(255,248,240,0.05);
-            border: 1px solid var(--border);
-            border-radius: 3px;
-            color: var(--ivory);
-            font-family: 'Jost', sans-serif;
-            font-size: 0.9rem;
-            padding: 14px 18px;
-            margin: 10px 0;
-            outline: none;
-            transition: border-color 0.2s;
-            -webkit-appearance: none;
-        }
-        .rsvp-card input:focus, .rsvp-card select:focus, .rsvp-card textarea:focus {
-            border-color: var(--gold);
-        }
-        .rsvp-card select option { background: #1a1510; }
-        .rsvp-card textarea { resize: vertical; min-height: 80px; }
-
-        .btn-submit {
-            width: 100%;
-            padding: 16px;
-            background: linear-gradient(135deg, var(--gold), #e8c96a);
-            border: none;
-            color: var(--black);
-            font-family: 'Jost', sans-serif;
-            font-size: 0.8rem;
-            font-weight: 500;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            cursor: none;
-            border-radius: 3px;
-            margin-top: 16px;
-            transition: opacity 0.2s, transform 0.2s;
-        }
-        .btn-submit:hover { opacity: 0.88; transform: translateY(-1px); }
-
-        .rsvp-thanks {
-            display: none;
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.8rem;
-            font-style: italic;
-            color: var(--gold-pale);
-        }
 
         /* ── PLAYLIST ── */
         .playlist-section {
@@ -785,15 +716,99 @@
 
         /* ── RESPONSIVE ── */
         @media (max-width: 768px) {
-            .hero-meta-top, .hero-meta-bottom { padding: 20px; font-size: 0.65rem; }
-            .story-grid, .story-grid.reverse { grid-template-columns: 1fr; direction: ltr; }
-            .chapter-card { padding: 40px 24px; }
-            .playlist-grid { grid-template-columns: 1fr; }
-            .rsvp-card { padding: 40px 24px; }
-            .vt-item:nth-child(even) { flex-direction: row; }
+
+            /* Hero */
+            .hero-meta-top, .hero-meta-bottom {
+                padding: 14px 16px;
+                font-size: 0.58rem;
+                letter-spacing: 1.5px;
+                flex-wrap: wrap;
+                gap: 6px;
+            }
+            .meta-val { font-size: 0.82rem; }
+            .hero-eyebrow { font-size: 0.6rem; letter-spacing: 4px; }
+            .hero-names { font-size: clamp(2.4rem, 11vw, 3.5rem); }
+            .hero-date { font-size: 0.65rem; letter-spacing: 3px; padding: 0 16px; }
+
+            /* Countdown — stack into 2x2 grid on mobile */
+            .countdown-wrap {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 12px;
+                margin: 24px 0 20px;
+                padding: 0 10px;
+            }
+            .slot-reel-wrap { width: 44px; height: 68px; }
+            .slot-digit { height: 68px; font-size: 2.1rem; }
+            .slot-label { font-size: 0.55rem; letter-spacing: 2px; }
+
+            /* Buttons */
+            .hero-btns { flex-direction: column; gap: 12px; padding: 0 20px; width: 100%; }
+            .btn { width: 100%; justify-content: center; padding: 13px 20px; font-size: 0.72rem; }
+
+            /* Scroll hint */
+            .scroll-hint { bottom: 70px; }
+
+            /* Section headings */
+            .section-label { font-size: 0.6rem; }
+            .section-heading { font-size: clamp(1.8rem, 7vw, 2.5rem); margin-bottom: 50px; }
+
+            /* Timeline */
+            .vtimeline { padding: 0 16px; margin-bottom: 70px; }
+            .vtimeline::before { left: 10px; transform: none; }
+            .vt-item,
+            .vt-item:nth-child(even) {
+                flex-direction: row;
+                gap: 16px;
+                align-items: flex-start;
+            }
+            .vt-item > div:first-child:empty,
+            .vt-item > div:last-child:empty { display: none; }
             .vt-item:nth-child(even) .vt-text { text-align: left; }
-            .vtimeline::before { left: 7px; }
-            .vt-node { width: 10px; height: 10px; }
+            .vt-node { flex-shrink: 0; margin-top: 5px; width: 10px; height: 10px; }
+            .vt-event { font-size: 1.1rem; }
+            .vt-caption { font-size: 0.75rem; }
+
+            /* Chapter cards */
+            .chapter-card { padding: 32px 20px; margin-bottom: 50px; }
+            .chapter-card::before, .chapter-card::after { width: 30px; height: 30px; }
+            .chapter-num { font-size: 0.6rem; }
+            .chapter-title { font-size: clamp(1.6rem, 6vw, 2.2rem); margin-bottom: 30px; }
+
+            /* Story grid — single column, text before photos */
+            .story-grid,
+            .story-grid.reverse { grid-template-columns: 1fr; direction: ltr; gap: 28px; }
+            .story-text { font-size: 0.92rem; line-height: 1.9; }
+            .pull-quote { font-size: 1.1rem; padding: 12px 16px; margin: 18px 0; }
+            .pull-quote::before { font-size: 3rem; }
+
+            /* Photo grid */
+            .photo-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+            .span-2 { grid-column: span 2; }
+
+            /* Gallery */
+            .gallery-strip { padding: 16px 16px 30px; gap: 10px; }
+            .gallery-thumb { width: 180px; height: 240px; }
+
+            /* Playlist */
+            .playlist-grid { grid-template-columns: 1fr; gap: 12px; max-width: 100%; padding: 0 4px; }
+            .song-card { padding: 16px 18px; }
+
+            /* Footer */
+            footer { padding: 60px 20px; }
+            .footer-names { font-size: clamp(2rem, 9vw, 3rem); }
+
+            /* Lightbox arrows closer on small screens */
+            #lb-prev { left: 8px; }
+            #lb-next { right: 8px; }
+            .lb-arrow { width: 40px; height: 40px; font-size: 1.2rem; }
+        }
+
+        @media (max-width: 400px) {
+            .hero-names { font-size: 2.2rem; }
+            .slot-reel-wrap { width: 38px; height: 60px; }
+            .slot-digit { height: 60px; font-size: 1.8rem; }
+            .slot-digits { gap: 4px; }
         }
     </style>
 </head>
@@ -939,7 +954,7 @@
             <div class="story-text">
                 <strong style="color:var(--gold-pale)">November 25th:</strong> Prajwal flew from Pune to Lucknow. Three days later, his father asked: <em>"Are you sure?"</em> The answer was instant: <em>"100%."</em>
                 <br><br>
-                At Starbucks, while families prepared the shagun, forty stolen minutes were more than enough. They already knew.
+                At Starbucks, while families prepared the shagun nearby, forty minutes belonged entirely to them. And somewhere between the laughter and the quiet, in a lift on the way out — their first hug. Brief, unplanned, and utterly calm. The kind of calm that doesn't need explaining. The kind that simply feels like home.
                 <div class="pull-quote">The Roka. The Tika. The Mithai. And a parking lot that proved the universe approved.</div>
                 On <strong style="color:var(--gold-pale)">November 29th</strong>, Shiwangi arrived in a beautiful Chikan Kurta — and Hazratganj had never felt so cinematic. At The Hazelnut Factory, over their first official date, they talked the way only two people who have known each other forever can — unhurried, unguarded, completely at home in each other's words.
                 <br><br>
@@ -948,8 +963,8 @@
                 <strong style="color:var(--gold-pale)">Delhi, the morning after.</strong> A metro ride to Millennium City Centre, Gurugram — then they parted briefly, she to her PG, he to his Bhaiya and Bhabhi's home. But only briefly. Hours later, reunited, they drove to Aerocity near New Delhi's international airport — where cake was cut for Bhaiya and Bhabhi's anniversary, a little early, because Prajwal had a flight to catch and some celebrations simply cannot wait.
                 <br><br>
                 His brother pulled him aside — <em>"Go, take a walk, just the two of you."</em> They did. Photographs were clicked. Moments were made quietly, the way the best ones always are. Then Bhaiya, Bhabhi, their little <strong style="color:var(--gold-pale)">1.5-year-old Raghav</strong>, and Shiwangi all drove him to Terminal 1.
-                <div class="pull-quote">She walked him to Gate 1 of Departures. No grand words — just the kind of goodbye that makes you certain you are leaving behind someone worth coming back to.</div>
-                And then he was back in Pune. But nothing was quite the same anymore.
+                <div class="pull-quote">She walked him to Gate 1. They stood there a moment longer than needed. That's the thing about loving someone — even the airport starts to feel like the hardest place in the world."</div>
+                nd then he was back in Pune. Same city, same flat, same desk. But something had changed its shape forever — and he didn't mind one bit.
             </div>
             <div class="photo-grid">
                 <img src="Love_5.JPG" alt="Roka" class="story-img tilt-img" onclick="openLightbox(this)">
@@ -979,33 +994,7 @@
     <p style="text-align:center;font-size:0.7rem;letter-spacing:2px;color:var(--gold);margin-top:10px;text-transform:uppercase;">← Scroll to explore →</p>
 </section>
 
-<!-- ══ RSVP ══ -->
-<section class="rsvp-section" id="rsvp">
-    <div class="section-label">Join the celebration</div>
-    <div class="section-heading">You're <em>Invited</em></div>
-    <div class="rsvp-card scroll-reveal">
-        <div id="rsvpForm">
-            <p style="font-size:0.85rem;color:var(--ivory-dim);margin-bottom:24px;line-height:1.8;">
-                June 19<sup>th</sup>, 2026 · City Club, Lucknow<br>
-                Please let us know you'll be there ✦
-            </p>
-            <input type="text" id="rsvpName" placeholder="Your Name" required>
-            <select id="rsvpAttend">
-                <option value="" disabled selected>Will you attend?</option>
-                <option value="yes">Joyfully attending 🎉</option>
-                <option value="no">Sending love from afar</option>
-            </select>
-            <input type="text" id="rsvpSong" placeholder="Song request for the DJ (optional)">
-            <textarea id="rsvpMsg" placeholder="A message for the couple (optional)"></textarea>
-            <button class="btn-submit" onclick="submitRSVP()">Confirm Attendance</button>
-        </div>
-        <div id="rsvpThanks" class="rsvp-thanks">
-            <div style="font-size:3rem;margin-bottom:16px">✦</div>
-            We can't wait to celebrate with you!<br>
-            <span style="font-size:1rem;font-family:'Jost';color:var(--ivory-dim);font-style:normal;">See you June 19th, 2026</span>
-        </div>
-    </div>
-</section>
+
 
 <!-- ══ PLAYLIST ══ -->
 <section class="playlist-section">
@@ -1321,19 +1310,7 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
-// ── RSVP ──
-function submitRSVP() {
-    const name = document.getElementById('rsvpName').value.trim();
-    const attend = document.getElementById('rsvpAttend').value;
-    if(!name || !attend) { alert('Please fill in your name and attendance ✦'); return; }
-    document.getElementById('rsvpForm').style.display = 'none';
-    document.getElementById('rsvpThanks').style.display = 'block';
-    if(attend === 'yes') {
-        confetti({ particleCount: 140, spread: 90, colors: ['#c9a84c','#e8c96a','#fff8f0','#ffb6c1'], origin: { y: 0.6 } });
-        setTimeout(() => confetti({ particleCount: 60, spread: 60, colors: ['#c9a84c','#ffffff'], origin: { y: 0.5, x: 0.2 } }), 400);
-        setTimeout(() => confetti({ particleCount: 60, spread: 60, colors: ['#c9a84c','#ffffff'], origin: { y: 0.5, x: 0.8 } }), 700);
-    }
-}
+
 </script>
 </body>
 </html>

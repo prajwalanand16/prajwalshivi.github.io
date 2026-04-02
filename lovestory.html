@@ -803,20 +803,12 @@
             .lb-arrow { width: 40px; height: 40px; font-size: 1.2rem; }
         }
 
-       @media (max-width: 768px) {
-    .slot-reel-wrap { 
-        width: 44px; 
-        height: 66px; 
-    }
-    .slot-digit { 
-        height: 66px; 
-        font-size: 2rem; 
-    }
-    
-    .slot-reel {
-        transition: transform 0.55s cubic-bezier(0.25, 0.85, 0.45, 1.0);
-    }
-}
+        @media (max-width: 400px) {
+            .hero-names { font-size: 2.2rem; }
+            .slot-reel-wrap { width: 38px; height: 60px; }
+            .slot-digit { height: 60px; font-size: 1.8rem; }
+            .slot-digits { gap: 4px; }
+        }
     </style>
 </head>
 <body>
@@ -1316,85 +1308,7 @@ document.addEventListener('keydown', (e) => {
         if(e.key==='ArrowLeft') lbNav(-1);
     }
 });
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const weddingDate = new Date(2026, 5, 19, 0, 0, 0); // June 19, 2026
-    
-    function buildCountdown() {
-        const countdownWrap = document.getElementById('countdownWrap');
-        
-        // Create all 4 time unit sections
-        let html = '';
-        
-        const units = [
-            { label: 'Days', divs: 3 },    // 3 digits for days (0-999)
-            { label: 'Hours', divs: 2 },   // 2 digits for hours (0-23)
-            { label: 'Mins', divs: 2 },    // 2 digits for minutes (0-59)
-            { label: 'Secs', divs: 2 }     // 2 digits for seconds (0-59)
-        ];
-        
-        units.forEach(unit => {
-            html += `<div class="slot-unit">
-                <div class="slot-digits">`;
-            
-            // Create reel for each digit position
-            for (let i = 0; i < unit.divs; i++) {
-                html += `<div class="slot-reel-wrap">
-                    <div class="slot-highlight"></div>
-                    <div class="slot-reel">`;
-                
-                // Create 11 copies of digits 0-9 for seamless looping
-                for (let j = 0; j < 11; j++) {
-                    html += `<div class="slot-digit">${j % 10}</div>`;
-                }
-                
-                html += `</div></div>`;
-            }
-            
-            html += `</div>
-                <div class="slot-label">${unit.label}</div>
-            </div>`;
-        });
-        
-        countdownWrap.innerHTML = html;
-        updateCountdown();
-        setInterval(updateCountdown, 1000);
-    }
-    
-    function updateCountdown() {
-        const now = new Date();
-        const diff = weddingDate - now;
-        
-        if (diff <= 0) {
-            document.getElementById('countdownWrap').innerHTML = 
-                '<div style="text-align:center;font-size:1.5rem;color:var(--gold);">🎉 It\'s Today! 🎉</div>';
-            return;
-        }
-        
-        // Calculate time units
-        const totalSeconds = Math.floor(diff / 1000);
-        const days = Math.floor(totalSeconds / 86400);
-        const hours = Math.floor((totalSeconds % 86400) / 3600);
-        const mins = Math.floor((totalSeconds % 3600) / 60);
-        const secs = totalSeconds % 60;
-        
-        // Format into digit arrays
-        const dayDigits = String(days).padStart(3, '0').split('');
-        const hourDigits = String(hours).padStart(2, '0').split('');
-        const minDigits = String(mins).padStart(2, '0').split('');
-        const secDigits = String(secs).padStart(2, '0').split('');
-        
-        const allDigits = [...dayDigits, ...hourDigits, ...minDigits, ...secDigits];
-        
-        document.querySelectorAll('.slot-reel').forEach((reel, idx) => {
-            const targetDigit = parseInt(allDigits[idx]);
-            const offset = targetDigit * -80; // 80px is the height of each digit on desktop
-            reel.style.transform = `translateY(${offset}px)`;
-        });
-    }
-    
-    buildCountdown();
-});
+
 
 </script>
 </body>

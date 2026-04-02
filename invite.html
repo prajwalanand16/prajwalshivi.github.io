@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wedding Invitation | Prajwal & Shiwangi</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+</head>
+<body>
+
+    <div id="preloader">
+        <div class="preloader-content">
+            <div class="heart-loader"><div class="heart"></div></div>
+            <p class="loading-text">Loading Invitation...</p>
+        </div>
+    </div>
+
+    <button id="music-toggle">🔇</button>
+    <audio id="bg-music" loop>
+        <source src="assets/music/bg-music.mp3" type="audio/mpeg">
+    </audio>
+
+    <section class="hero">
+        <video autoplay muted loop playsinline class="hero-video">
+            <source src="assets/video/hero.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"></div>
+        <div class="hero-content">
+            <p class="intro reveal">YOU ARE INVITED TO THE WEDDING OF</p>
+            <h1 class="names typewriter-text">Prajwal & Shiwangi</h1>
+            <p class="date reveal">JUNE 19, 2026</p>
+        </div>
+    </section>
+
+    <section class="section countdown-section reveal">
+        <h2 class="section-title">The Big Day is Approaching</h2>
+        <div class="countdown-timer">
+            <div class="countdown-item"><span id="days" class="countdown-number">000</span><span class="countdown-label">Days</span></div>
+            <div class="countdown-item"><span id="hours" class="countdown-number">00</span><span class="countdown-label">Hours</span></div>
+            <div class="countdown-item"><span id="minutes" class="countdown-number">00</span><span class="countdown-label">Mins</span></div>
+            <div class="countdown-item"><span id="seconds" class="countdown-number">00</span><span class="countdown-label">Secs</span></div>
+        </div>
+    </section>
+
+    <section class="section photo-gallery">
+        <h2 class="section-title">Save The Date</h2>
+        <div class="gallery-container">
+            <div class="gallery-item active">
+                <img src="assets/photos/invite-1.jpg" alt="Wedding Invite">
+            </div>
+            <div class="gallery-item">
+                <img src="assets/photos/invite-2.jpg" alt="Wedding Details">
+            </div>
+        </div>
+        <div class="gallery-nav">
+            <button class="gallery-prev">←</button>
+            <button class="gallery-next">→</button>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2 class="section-title">Wedding Events</h2>
+        <div class="cards">
+            <div class="enhanced-card">
+                <div class="card-icon">💍</div>
+                <h3>Wedding Ceremony</h3>
+                <p class="card-time">June 19, 2026</p>
+                <p class="card-description">Venue details to be updated.</p>
+            </div>
+            <div class="enhanced-card">
+                <div class="card-icon">🥂</div>
+                <h3>Celebration</h3>
+                <p class="card-time">June 20, 2026</p>
+                <p class="card-description">Reception and Dinner.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section closing">
+        <h2 class="section-title">Location</h2>
+        <div class="map-container">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d113911.33230678202!2d80.85966598585641!3d26.84869255260171!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x399bfd991f32b16b%3A0x93ccba8909978be7!2sLucknow%2C%20Uttar%20Pradesh!5e0!3m2!1sen!2sin!4v1708990000000!5m2!1sen!2sin" 
+                width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+        <a href="#" class="map-btn">Get Directions</a>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>

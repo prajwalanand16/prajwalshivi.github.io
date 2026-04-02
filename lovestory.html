@@ -3,319 +3,1253 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prajwal & Shiwangi | Our Big Day</title>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>Prajwal & Shiwangi | June 19, 2026</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            background: #1a1a1a;
-            color: white;
-            font-family: 'Montserrat', sans-serif;
-            text-align: center;
-            overflow-x: hidden;
-            overflow-y: auto;
+        :root {
+            --gold: #c9a84c;
+            --gold-light: #e8c96a;
+            --gold-pale: #f5e6c8;
+            --black: #0d0a07;
+            --black-mid: #1a1510;
+            --ivory: #fff8f0;
+            --ivory-dim: rgba(255,248,240,0.7);
+            --card-bg: rgba(255,248,240,0.04);
+            --border: rgba(201,168,76,0.25);
         }
 
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            background: var(--black);
+            color: var(--ivory);
+            font-family: 'Jost', sans-serif;
+            font-weight: 300;
+            overflow-x: hidden;
+            cursor: none;
+        }
+
+        /* ── CUSTOM CURSOR ── */
+        #cursor {
+            position: fixed;
+            width: 28px; height: 28px;
+            border: 1.5px solid var(--gold);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%,-50%);
+            transition: transform 0.08s ease, width 0.2s, height 0.2s, background 0.2s;
+            mix-blend-mode: difference;
+        }
+        #cursor-dot {
+            position: fixed;
+            width: 5px; height: 5px;
+            background: var(--gold);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10000;
+            transform: translate(-50%,-50%);
+        }
+        body:hover #cursor { }
+        a:hover ~ #cursor, button:hover ~ #cursor { width: 50px; height: 50px; }
+
+        /* ── GRAIN OVERLAY ── */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+            opacity: 0.035;
+            pointer-events: none;
+            z-index: 8000;
+        }
+
+        /* ── HERO ── */
         .hero {
             height: 100vh;
-            width: 100%;
+            min-height: 700px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
-                        url('Love_1.JPG');
-            background-size: cover;
-            background-position: center;
             position: relative;
-            flex-shrink: 0;
+            overflow: hidden;
         }
 
-        .heart {
+        .hero-bg {
             position: absolute;
-            font-size: 18px;
-            user-select: none;
-            pointer-events: none;
-            animation: float 10s linear infinite;
+            inset: -40px;
+            background: linear-gradient(rgba(13,10,7,0.55), rgba(13,10,7,0.55)),
+                        url('Love_1.JPG') center/cover no-repeat;
+            transform: scale(1.1);
+            transition: transform 0.1s linear;
+            z-index: 0;
+        }
+
+        .hero-vignette {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at center, transparent 40%, rgba(13,10,7,0.85) 100%);
             z-index: 1;
-            filter: drop-shadow(0 0 5px rgba(0,0,0,0.3));
         }
 
-        @keyframes float {
-            0% { transform: translateY(110vh) rotate(0deg); opacity: 0; }
-            10% { opacity: 0.8; }
-            90% { opacity: 0.8; }
-            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        /* Petals */
+        .petal {
+            position: absolute;
+            pointer-events: none;
+            animation: petalFall linear infinite;
+            z-index: 2;
+            opacity: 0;
+        }
+        @keyframes petalFall {
+            0%   { transform: translateY(-5vh) rotate(0deg) translateX(0); opacity: 0; }
+            5%   { opacity: 0.7; }
+            95%  { opacity: 0.5; }
+            100% { transform: translateY(110vh) rotate(720deg) translateX(60px); opacity: 0; }
         }
 
-        .header-meta, .footer-meta {
+        /* Header meta */
+        .hero-meta-top, .hero-meta-bottom {
             position: absolute;
             width: 100%;
             display: flex;
             justify-content: space-between;
-            padding: 20px 40px;
-            box-sizing: border-box;
-            font-size: 0.85rem;
-            letter-spacing: 1px;
-            z-index: 2;
-        }
-        .header-meta { top: 0; background: linear-gradient(to bottom, rgba(0,0,0,0.4), transparent); }
-        .footer-meta { bottom: 0; background: linear-gradient(to top, rgba(0,0,0,0.4), transparent); }
-
-        .meta-item { text-align: center; }
-        .meta-item span { display: block; font-weight: 600; font-size: 1.1rem; }
-
-        .names {
-            font-family: 'Dancing Script', cursive;
-            font-size: 4.5rem;
-            margin-bottom: 0;
-            text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
-            z-index: 2;
-        }
-
-        h1 {
-            font-weight: 300;
+            padding: 28px 50px;
+            z-index: 3;
+            font-size: 0.72rem;
+            letter-spacing: 2.5px;
             text-transform: uppercase;
-            letter-spacing: 5px;
-            font-size: 1.2rem;
-            margin-top: 0;
-            margin-bottom: 20px;
-            z-index: 2;
+            color: var(--gold-pale);
         }
+        .hero-meta-top { top: 0; background: linear-gradient(to bottom, rgba(13,10,7,0.6), transparent); }
+        .hero-meta-bottom { bottom: 0; background: linear-gradient(to top, rgba(13,10,7,0.6), transparent); }
+        .meta-val { font-family: 'Cormorant Garamond', serif; font-size: 1rem; font-weight: 600; display: block; color: var(--gold); }
 
-        .countdown-container {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            z-index: 2;
-        }
-
-        .time-box {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(8px);
-            padding: 15px 25px;
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            min-width: 80px;
-        }
-
-        .number { font-size: 2.5rem; font-weight: 600; display: block; }
-
-        .btn-container {
-            margin-top: 30px;
+        /* Hero content */
+        .hero-content {
+            position: relative;
+            z-index: 3;
             display: flex;
             flex-direction: column;
-            gap: 15px;
             align-items: center;
-            z-index: 2;
+            text-align: center;
         }
 
-        .action-btn {
-            background: rgba(255,255,255,0.2);
-            border: 1px solid white;
-            color: white;
-            padding: 12px 25px;
-            border-radius: 25px;
-            cursor: pointer;
-            font-family: 'Montserrat';
-            text-decoration: none;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
+        .hero-eyebrow {
+            font-size: 0.7rem;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 18px;
+            opacity: 0;
+            animation: fadeUp 1s ease 0.3s forwards;
         }
 
-        .loc-btn {
-            background: rgba(255, 215, 0, 0.2);
-            animation: pulse 2s infinite;
+        .hero-names {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(3.5rem, 8vw, 7rem);
+            font-weight: 300;
+            line-height: 1;
+            letter-spacing: 2px;
+            color: var(--ivory);
+            overflow: hidden;
+        }
+        .hero-names .char {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        .hero-names .char.visible { opacity: 1; transform: translateY(0); }
+        .hero-names .amp {
+            color: var(--gold);
+            font-style: italic;
+            display: inline-block;
+            margin: 0 12px;
         }
 
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4); }
-            70% { box-shadow: 0 0 0 10px rgba(255, 255, 255, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
+        .hero-divider {
+            width: 0;
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--gold), transparent);
+            margin: 20px auto;
+            transition: width 1.2s ease 1.5s;
+        }
+        .hero-divider.expanded { width: 320px; }
+
+        .hero-date {
+            font-size: 0.75rem;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: var(--ivory-dim);
+            opacity: 0;
+            animation: fadeUp 1s ease 1.8s forwards;
         }
 
-        /* Timeline Section */
-        .timeline-section {
-            padding: 100px 20px;
-            background: #121212;
+        /* Flip Countdown */
+        .countdown-wrap {
+            display: flex;
+            gap: 20px;
+            margin: 35px 0 30px;
+            opacity: 0;
+            animation: fadeUp 1s ease 2s forwards;
+        }
+
+        .flip-box {
+            text-align: center;
+        }
+
+        .flip-card {
+            width: 80px;
+            height: 90px;
+            position: relative;
+            perspective: 200px;
+        }
+
+        .flip-top, .flip-bottom {
             width: 100%;
-            box-sizing: border-box;
+            height: 50%;
+            background: rgba(255,248,240,0.07);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+        .flip-top {
+            border-radius: 8px 8px 0 0;
+            border-bottom: 1px solid rgba(201,168,76,0.15);
+            align-items: flex-end;
+            padding-bottom: 4px;
+        }
+        .flip-bottom {
+            border-radius: 0 0 8px 8px;
+            align-items: flex-start;
+            padding-top: 4px;
+        }
+        .flip-number {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.8rem;
+            font-weight: 600;
+            color: var(--ivory);
+            line-height: 1;
+        }
+        .flip-label {
+            font-size: 0.6rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-top: 7px;
         }
 
+        .flip-anim {
+            position: absolute;
+            inset: 0;
+            background: rgba(255,248,240,0.06);
+            transform-origin: bottom;
+            animation: flipAnim 0.4s ease forwards;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            padding-bottom: 4px;
+            border-radius: 8px 8px 0 0;
+        }
+        @keyframes flipAnim {
+            0%   { transform: rotateX(0deg); opacity: 1; }
+            100% { transform: rotateX(-90deg); opacity: 0; }
+        }
+
+        /* Buttons */
+        .hero-btns {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            justify-content: center;
+            opacity: 0;
+            animation: fadeUp 1s ease 2.2s forwards;
+        }
+
+        .btn {
+            padding: 13px 28px;
+            border-radius: 40px;
+            font-family: 'Jost', sans-serif;
+            font-size: 0.78rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: none;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-outline {
+            border: 1px solid rgba(255,248,240,0.4);
+            color: var(--ivory);
+            background: rgba(255,248,240,0.06);
+        }
+        .btn-outline:hover {
+            border-color: var(--gold);
+            background: rgba(201,168,76,0.12);
+            color: var(--gold);
+        }
+
+        .btn-gold {
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            background: rgba(201,168,76,0.1);
+            animation: pulseGold 2.5s infinite;
+        }
+        @keyframes pulseGold {
+            0%,100% { box-shadow: 0 0 0 0 rgba(201,168,76,0.3); }
+            50% { box-shadow: 0 0 0 10px rgba(201,168,76,0); }
+        }
+        .btn-gold:hover { background: rgba(201,168,76,0.25); }
+
+        .scroll-hint {
+            position: absolute;
+            bottom: 90px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 3;
+            font-size: 0.65rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--ivory-dim);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            opacity: 0;
+            animation: fadeUp 1s ease 2.8s forwards;
+        }
+        .scroll-line {
+            width: 1px;
+            height: 50px;
+            background: linear-gradient(to bottom, var(--gold), transparent);
+            animation: scrollPulse 1.5s ease-in-out infinite;
+        }
+        @keyframes scrollPulse { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+        /* ── TIMELINE ── */
+        .timeline-section {
+            padding: 120px 20px;
+            background: var(--black-mid);
+            position: relative;
+        }
+
+        .section-label {
+            font-size: 0.65rem;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: var(--gold);
+            text-align: center;
+            margin-bottom: 16px;
+        }
+
+        .section-heading {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 300;
+            text-align: center;
+            color: var(--ivory);
+            margin-bottom: 80px;
+        }
+        .section-heading em { color: var(--gold); font-style: italic; }
+
+        /* Vertical Timeline */
+        .vtimeline {
+            max-width: 800px;
+            margin: 0 auto 120px;
+            position: relative;
+            padding: 0 20px;
+        }
+
+        .vtimeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background: linear-gradient(to bottom, transparent, var(--gold) 10%, var(--gold) 90%, transparent);
+            transform: translateX(-50%);
+            opacity: 0.3;
+        }
+
+        .vt-item {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            margin-bottom: 50px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+        .vt-item.visible { opacity: 1; transform: translateY(0); }
+        .vt-item:nth-child(even) { flex-direction: row-reverse; }
+        .vt-item:nth-child(even) .vt-text { text-align: right; }
+
+        .vt-node {
+            flex-shrink: 0;
+            width: 14px; height: 14px;
+            border-radius: 50%;
+            background: var(--gold);
+            box-shadow: 0 0 12px var(--gold);
+            position: relative;
+            z-index: 1;
+        }
+
+        .vt-date {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--gold);
+        }
+        .vt-event {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            font-weight: 400;
+            color: var(--ivory);
+            margin: 4px 0;
+        }
+        .vt-caption { font-size: 0.8rem; color: var(--ivory-dim); }
+        .vt-text { flex: 1; }
+
+        /* Chapter Cards */
         .chapter-card {
-            max-width: 1000px;
-            margin: 0 auto 100px auto;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 30px;
-            padding: 50px 30px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            max-width: 1100px;
+            margin: 0 auto 100px;
+            padding: 60px 50px;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            position: relative;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .chapter-card.visible { opacity: 1; transform: translateY(0); }
+
+        /* Gold corner ornaments */
+        .chapter-card::before, .chapter-card::after {
+            content: '';
+            position: absolute;
+            width: 50px; height: 50px;
+            border-color: var(--gold);
+            border-style: solid;
+            opacity: 0.5;
+        }
+        .chapter-card::before { top: 16px; left: 16px; border-width: 1px 0 0 1px; }
+        .chapter-card::after  { bottom: 16px; right: 16px; border-width: 0 1px 1px 0; }
+
+        .chapter-num {
+            font-size: 0.65rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 10px;
         }
 
         .chapter-title {
-            font-family: 'Dancing Script', cursive;
-            font-size: 3.5rem;
-            color: #ffd700;
-            margin-bottom: 30px;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2rem, 4vw, 3.2rem);
+            font-weight: 300;
+            color: var(--ivory);
+            margin-bottom: 50px;
+            position: relative;
+            display: inline-block;
+        }
+        .chapter-title::after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 0;
+            width: 60px;
+            height: 1px;
+            background: var(--gold);
         }
 
         .story-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 40px;
-            align-items: center;
-            text-align: left;
+            gap: 50px;
+            align-items: start;
         }
-
-        /* Alternating layout for Chapter 2 */
-        .reverse-grid { direction: rtl; }
-        .reverse-grid .story-text { direction: ltr; }
+        .story-grid.reverse { direction: rtl; }
+        .story-grid.reverse > * { direction: ltr; }
 
         .story-text {
-            line-height: 1.8;
-            font-size: 1.1rem;
-            font-weight: 300;
+            font-size: 1rem;
+            line-height: 2;
+            color: var(--ivory-dim);
         }
 
-        .story-text b { color: #ffb6c1; }
+        .pull-quote {
+            border-left: 2px solid var(--gold);
+            padding: 14px 20px;
+            margin: 24px 0;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3rem;
+            font-style: italic;
+            color: var(--gold-pale);
+            position: relative;
+        }
+        .pull-quote::before {
+            content: '\201C';
+            font-size: 4rem;
+            color: var(--gold);
+            opacity: 0.3;
+            position: absolute;
+            top: -10px;
+            left: 10px;
+            font-family: 'Cormorant Garamond', serif;
+            line-height: 1;
+        }
 
-        .photo-stack {
+        /* Photo grid */
+        .photo-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
         }
 
         .story-img {
             width: 100%;
-            border-radius: 15px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
-            transition: transform 0.3s ease;
+            aspect-ratio: 3/4;
+            object-fit: cover;
+            border-radius: 3px;
+            display: block;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            cursor: none;
+        }
+        .story-img:hover {
+            transform: scale(1.03);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.7);
+            z-index: 2;
+            position: relative;
+        }
+        .span-2 { grid-column: span 2; aspect-ratio: 16/9; }
+
+        /* ── GALLERY ── */
+        .gallery-section {
+            padding: 100px 20px;
+            background: var(--black);
         }
 
-        .story-img:hover { transform: scale(1.05); }
+        .gallery-strip {
+            display: flex;
+            gap: 16px;
+            overflow-x: auto;
+            padding: 20px 40px 40px;
+            scrollbar-width: none;
+            -webkit-overflow-scrolling: touch;
+            cursor: none;
+        }
+        .gallery-strip::-webkit-scrollbar { display: none; }
 
-        .full-img { grid-column: span 2; }
+        .gallery-thumb {
+            flex-shrink: 0;
+            width: 260px;
+            height: 340px;
+            object-fit: cover;
+            border-radius: 4px;
+            transition: transform 0.3s ease;
+            cursor: none;
+        }
+        .gallery-thumb:hover { transform: scale(1.04) translateY(-6px); }
 
+        /* ── LIGHTBOX ── */
+        #lightbox {
+            position: fixed;
+            inset: 0;
+            background: rgba(13,10,7,0.97);
+            z-index: 7000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+        }
+        #lightbox.open { display: flex; }
+        #lightbox-img {
+            max-width: 88vw;
+            max-height: 88vh;
+            object-fit: contain;
+            border-radius: 4px;
+            animation: lbIn 0.3s ease;
+        }
+        @keyframes lbIn { from { opacity:0; transform: scale(0.92); } to { opacity:1; transform: scale(1); } }
+        .lb-close {
+            position: absolute;
+            top: 30px; right: 40px;
+            font-size: 2rem;
+            color: var(--gold);
+            cursor: none;
+            background: none;
+            border: none;
+            line-height: 1;
+        }
+        .lb-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(201,168,76,0.15);
+            border: 1px solid var(--border);
+            color: var(--gold);
+            font-size: 1.5rem;
+            width: 52px; height: 52px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            cursor: none;
+        }
+        .lb-arrow:hover { background: rgba(201,168,76,0.3); }
+        #lb-prev { left: 24px; }
+        #lb-next { right: 24px; }
+
+        /* ── RSVP ── */
+        .rsvp-section {
+            padding: 100px 20px;
+            background: var(--black-mid);
+            text-align: center;
+        }
+
+        .rsvp-card {
+            max-width: 560px;
+            margin: 0 auto;
+            padding: 60px 50px;
+            border: 1px solid var(--border);
+            background: var(--card-bg);
+            position: relative;
+        }
+        .rsvp-card::before,.rsvp-card::after {
+            content: '';
+            position: absolute;
+            width: 40px; height: 40px;
+            border-color: var(--gold);
+            border-style: solid;
+            opacity: 0.5;
+        }
+        .rsvp-card::before { top: 14px; left: 14px; border-width: 1px 0 0 1px; }
+        .rsvp-card::after  { bottom: 14px; right: 14px; border-width: 0 1px 1px 0; }
+
+        .rsvp-card input, .rsvp-card select, .rsvp-card textarea {
+            width: 100%;
+            background: rgba(255,248,240,0.05);
+            border: 1px solid var(--border);
+            border-radius: 3px;
+            color: var(--ivory);
+            font-family: 'Jost', sans-serif;
+            font-size: 0.9rem;
+            padding: 14px 18px;
+            margin: 10px 0;
+            outline: none;
+            transition: border-color 0.2s;
+            -webkit-appearance: none;
+        }
+        .rsvp-card input:focus, .rsvp-card select:focus, .rsvp-card textarea:focus {
+            border-color: var(--gold);
+        }
+        .rsvp-card select option { background: #1a1510; }
+        .rsvp-card textarea { resize: vertical; min-height: 80px; }
+
+        .btn-submit {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--gold), #e8c96a);
+            border: none;
+            color: var(--black);
+            font-family: 'Jost', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            cursor: none;
+            border-radius: 3px;
+            margin-top: 16px;
+            transition: opacity 0.2s, transform 0.2s;
+        }
+        .btn-submit:hover { opacity: 0.88; transform: translateY(-1px); }
+
+        .rsvp-thanks {
+            display: none;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            font-style: italic;
+            color: var(--gold-pale);
+        }
+
+        /* ── PLAYLIST ── */
+        .playlist-section {
+            padding: 100px 20px;
+            background: var(--black);
+        }
+
+        .playlist-grid {
+            max-width: 800px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .song-card {
+            padding: 22px 24px;
+            border: 1px solid var(--border);
+            background: var(--card-bg);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease, border-color 0.3s;
+        }
+        .song-card.visible { opacity: 1; transform: translateY(0); }
+        .song-card:hover { border-color: var(--gold); }
+
+        .song-icon {
+            width: 44px; height: 44px;
+            border-radius: 50%;
+            background: rgba(201,168,76,0.12);
+            border: 1px solid var(--border);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+
+        .song-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.05rem;
+            color: var(--ivory);
+        }
+        .song-why { font-size: 0.75rem; color: var(--gold); margin-top: 3px; }
+
+        /* ── FOOTER ── */
+        footer {
+            padding: 80px 20px;
+            text-align: center;
+            background: var(--black);
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-names {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            font-weight: 300;
+            color: var(--ivory);
+            margin-bottom: 8px;
+        }
+        .footer-names em { color: var(--gold); font-style: italic; }
+        .footer-date {
+            font-size: 0.7rem;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 30px;
+        }
+        .footer-note { font-size: 0.8rem; color: var(--ivory-dim); }
+
+        /* Animations */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ── RESPONSIVE ── */
         @media (max-width: 768px) {
-            .hero { height: auto; padding: 100px 20px; }
-            .names { font-size: 3rem; }
-            .header-meta, .footer-meta { position: relative; flex-direction: column; gap: 15px; background: none; padding: 20px; }
-            .story-grid { grid-template-columns: 1fr; }
-            .reverse-grid { direction: ltr; }
-            .chapter-title { font-size: 2.5rem; }
+            .hero-meta-top, .hero-meta-bottom { padding: 20px; font-size: 0.65rem; }
+            .story-grid, .story-grid.reverse { grid-template-columns: 1fr; direction: ltr; }
+            .chapter-card { padding: 40px 24px; }
+            .playlist-grid { grid-template-columns: 1fr; }
+            .rsvp-card { padding: 40px 24px; }
+            .vt-item:nth-child(even) { flex-direction: row; }
+            .vt-item:nth-child(even) .vt-text { text-align: left; }
+            .vtimeline::before { left: 7px; }
+            .vt-node { width: 10px; height: 10px; }
         }
     </style>
 </head>
 <body>
 
-    <section class="hero">
-        <div class="header-meta">
-            <div class="meta-item"><span>A3 29</span>29th November 2025</div>
-            <div class="meta-item"><span>Fiance era started</span>24th January 2026</div>
-            <div class="meta-item"><span>18:29</span></div>
+<!-- Custom cursor -->
+<div id="cursor"></div>
+<div id="cursor-dot"></div>
+
+<!-- ══ HERO ══ -->
+<section class="hero" id="hero">
+    <div class="hero-bg" id="heroBg"></div>
+    <div class="hero-vignette"></div>
+
+    <div class="hero-meta-top">
+        <div><span class="meta-val">A3 · 29</span>29th November 2025</div>
+        <div style="text-align:center"><span class="meta-val">Fiancé Era</span>24th January 2026</div>
+        <div style="text-align:right"><span class="meta-val">18:29</span></div>
+    </div>
+
+    <div class="hero-content">
+        <div class="hero-eyebrow">Save the Date</div>
+
+        <div class="hero-names" id="heroNames">
+            <!-- JS fills this -->
         </div>
 
-        <div class="names">Prajwal & Shiwangi</div>
-        <h1 style="margin-top: 20px;">Save the Date - June 19th, 2026</h1>
-        
-        <div class="countdown-container">
-            <div class="time-box"><span class="number" id="days">00</span><span class="label">Days</span></div>
-            <div class="time-box"><span class="number" id="hours">00</span><span class="label">Hrs</span></div>
-            <div class="time-box"><span class="number" id="minutes">00</span><span class="label">Min</span></div>
-            <div class="time-box"><span class="number" id="seconds">00</span><span class="label">Sec</span></div>
-        </div>
-        
-        <div class="btn-container">
-            <button id="musicToggle" class="action-btn" onclick="toggleMusic()">🎵 Play Our Song</button>
-            <a href="https://maps.app.goo.gl/D93EH4ziLjMuPRrc8" target="_blank" class="action-btn loc-btn">📍 City Club, Lucknow</a>
-        </div>
+        <div class="hero-divider" id="heroDivider"></div>
+        <div class="hero-date">June 19<sup>th</sup>, 2026 &nbsp;·&nbsp; City Club, Lucknow</div>
 
-        <div style="margin-top: 40px; font-size: 0.9rem; opacity: 0.7;">Scroll to see our story ↓</div>
-
-        <div class="footer-meta">
-            <div class="meta-item"><span>3rd November 2025</span></div>
-            <div class="meta-item"><span>Rokafied</span>28th November 2025</div>
-            <div class="meta-item"><span>16th November 2025</span></div>
-        </div>
-    </section>
-
-    <section class="timeline-section">
-        <div class="chapter-card">
-            <div class="chapter-title">Chapter 1: The First Hello</div>
-            <div class="story-grid">
-                <div class="story-text">
-                    It all started on <b>November 3rd</b> with a simple WhatsApp text. By 9:30 PM that night, we were on a call that felt like a reunion with a soul I had known for lifetimes.
-                    <br><br>
-                    The magic was instant. On the third day, Shiwangi won my heart completely by <b>ordering me lunch via Zomato</b> during a busy work shift.
-                    <br><br>
-                    By <b>November 16th</b>, our parents met in Shahganj while I was in Pune. Seeing her radiant happiness while meeting my family was the moment our fairytale truly began.
+        <div class="countdown-wrap">
+            <div class="flip-box">
+                <div class="flip-card">
+                    <div class="flip-top"><span class="flip-number" id="fDays">00</span></div>
+                    <div class="flip-bottom"><span class="flip-number" id="fDaysB">00</span></div>
                 </div>
-                <div class="photo-stack">
-                    <img src="Love_2.JPG" alt="First Hello" class="story-img">
-                    <img src="Love_3.JPG" alt="Leap of Faith" class="story-img">
+                <div class="flip-label">Days</div>
+            </div>
+            <div class="flip-box">
+                <div class="flip-card">
+                    <div class="flip-top"><span class="flip-number" id="fHours">00</span></div>
+                    <div class="flip-bottom"><span class="flip-number" id="fHoursB">00</span></div>
                 </div>
+                <div class="flip-label">Hours</div>
+            </div>
+            <div class="flip-box">
+                <div class="flip-card">
+                    <div class="flip-top"><span class="flip-number" id="fMin">00</span></div>
+                    <div class="flip-bottom"><span class="flip-number" id="fMinB">00</span></div>
+                </div>
+                <div class="flip-label">Mins</div>
+            </div>
+            <div class="flip-box">
+                <div class="flip-card">
+                    <div class="flip-top"><span class="flip-number" id="fSec">00</span></div>
+                    <div class="flip-bottom"><span class="flip-number" id="fSecB">00</span></div>
+                </div>
+                <div class="flip-label">Secs</div>
             </div>
         </div>
 
-        <div class="chapter-card">
-            <div class="chapter-title">Chapter 2: Written in the Stars</div>
-            <div class="story-grid reverse-grid">
-                <div class="story-text">
-                    <b>The Big "Yes":</b> After my parents' glowing review of their first meeting and learning about Shivi and her side of the family being very happy as well, I flew from Pune to Lucknow on <b>November 25th</b>. Three days later, at Phoenix Mall, my father asked the ultimate question: "Are you sure?" My answer was instant: "100%."  <b>The Starbucks Interlude:</b> While our families prepared the shagun, Shiwangi and I stole forty minutes at Starbucks and had our moments. We didn't need much time to decide—we already knew. <b>The Roka:</b>When we joined the families at the food court, we both said "Yes" to a lifetime together. The Tika and Mithai made it official: we were <b>Rokafied</b>.
-                    <br><br>
-                    <b>The Parking Lot Sign:</b> As we headed home, we found our cars parked side-by-side in a massive, four-story parking lot of the mall. Out of hundreds of spots, the universe put our families right next to each other. It was like the universe approved our decision in a mysterious way.
-                    <br><br>
-                    <b> The First Date & The Journey:</b>  On <b> November 29th</b>, Shiwangi arrived in a beautiful Chikan Kurta in Lucknow in the evening. We had our first official date at The Hazelnut Factory in Hazratganj before heading to the station.
-                    <br><br>
-                    <b> Berth A3-29:</b>  Sitting arm-in-arm on Platform 1, we waited for the 11:30 PM train. We settled into Coach <b>A3, Berth 29</b>. That overnight journey to Delhi wasn't just a trip; it was our first time traveling as a couple, heading toward a future.
-                </div>
-                <div class="photo-stack">
-                    <img src="Love_5.JPG" alt="Roka Ceremony" class="story-img">
-                    <img src="Love_6.JPG" alt="Hazelnut Factory" class="story-img">
-                    <img src="Love_7.JPG" alt="Train Journey" class="story-img full-img">
-                    <img src="Love_8.JPG" alt="New Delhi" class="story-img">
-                    <img src="Love_4.JPG" alt="New Delhi" class="story-img">
-                </div>
+        <div class="hero-btns">
+            <button id="musicToggle" class="btn btn-outline" onclick="toggleMusic()">
+                <span id="musicIcon">♪</span> Play Our Song
+            </button>
+            <a href="https://maps.app.goo.gl/D93EH4ziLjMuPRrc8" target="_blank" class="btn btn-gold">
+                ◈ City Club, Lucknow
+            </a>
+        </div>
+    </div>
+
+    <div class="scroll-hint">
+        <span>Our Story</span>
+        <div class="scroll-line"></div>
+    </div>
+
+    <div class="hero-meta-bottom">
+        <div><span class="meta-val">3 November 2025</span>First Hello</div>
+        <div style="text-align:center"><span class="meta-val">Rokafied</span>28th November 2025</div>
+        <div style="text-align:right"><span class="meta-val">16 November 2025</span>Families Met</div>
+    </div>
+</section>
+
+<!-- ══ TIMELINE ══ -->
+<section class="timeline-section">
+    <div class="section-label">How it began</div>
+    <div class="section-heading">The Journey to <em>Forever</em></div>
+
+    <div class="vtimeline">
+        <div class="vt-item">
+            <div class="vt-text">
+                <div class="vt-date">3 November 2025</div>
+                <div class="vt-event">The First Hello</div>
+                <div class="vt-caption">A WhatsApp message. By 9:30 PM, a phone call that felt like a reunion.</div>
+            </div>
+            <div class="vt-node"></div>
+            <div style="flex:1"></div>
+        </div>
+        <div class="vt-item">
+            <div style="flex:1"></div>
+            <div class="vt-node"></div>
+            <div class="vt-text">
+                <div class="vt-date">5 November 2025</div>
+                <div class="vt-event">Lunch via Zomato</div>
+                <div class="vt-caption">Shiwangi ordered Prajwal lunch during a busy work shift. Heart: stolen.</div>
             </div>
         </div>
-    </section>
+        <div class="vt-item">
+            <div class="vt-text">
+                <div class="vt-date">16 November 2025</div>
+                <div class="vt-event">Families Meet in Shahganj</div>
+                <div class="vt-caption">Our parents met while Prajwal was in Pune. The fairytale had officially begun.</div>
+            </div>
+            <div class="vt-node"></div>
+            <div style="flex:1"></div>
+        </div>
+        <div class="vt-item">
+            <div style="flex:1"></div>
+            <div class="vt-node"></div>
+            <div class="vt-text">
+                <div class="vt-date">28 November 2025</div>
+                <div class="vt-event">Rokafied 💍</div>
+                <div class="vt-caption">Phoenix Mall, Lucknow. Tika, Mithai, and a resounding "Yes." Official.</div>
+            </div>
+        </div>
+        <div class="vt-item">
+            <div class="vt-text">
+                <div class="vt-date">29 November 2025</div>
+                <div class="vt-event">First Date &amp; The Train</div>
+                <div class="vt-caption">Hazelnut Factory → Platform 1 → Berth A3-29. First journey as a couple.</div>
+            </div>
+            <div class="vt-node"></div>
+            <div style="flex:1"></div>
+        </div>
+        <div class="vt-item">
+            <div style="flex:1"></div>
+            <div class="vt-node"></div>
+            <div class="vt-text">
+                <div class="vt-date">24 January 2026</div>
+                <div class="vt-event">Fiancé Era Begins</div>
+                <div class="vt-caption">Ring, reality, and the sweetest title: soon-to-be.</div>
+            </div>
+        </div>
+        <div class="vt-item" style="justify-content:center">
+            <div class="vt-node" style="background:linear-gradient(135deg,var(--gold),#e8c96a);box-shadow:0 0 25px var(--gold);width:20px;height:20px;"></div>
+            <div class="vt-text" style="flex:0 0 auto;text-align:center;padding-left:20px;">
+                <div class="vt-date">19 June 2026</div>
+                <div class="vt-event" style="font-size:1.8rem">The Wedding ✦</div>
+                <div class="vt-caption">City Club, Lucknow · A lifetime begins</div>
+            </div>
+        </div>
+    </div>
 
-    <audio id="weddingSong" loop><source src="Chann Vi Gawah - Madhav Mahajan.mp3" type="audio/mpeg"></audio>
+    <!-- Chapter 1 -->
+    <div class="chapter-card scroll-reveal">
+        <div class="chapter-num">Chapter One</div>
+        <div class="chapter-title">The First Hello</div>
+        <div class="story-grid">
+            <div class="story-text">
+                It all started on <strong style="color:var(--gold-pale)">November 3rd</strong> with a simple WhatsApp text. By 9:30 PM that night, a call that felt like a reunion with a soul known for lifetimes.
+                <br><br>
+                The magic was instant.
+                <div class="pull-quote">She ordered me Zomato lunch on day three. I was done for.</div>
+                By <strong style="color:var(--gold-pale)">November 16th</strong>, our parents met in Shahganj while Prajwal was in Pune. Watching her radiant happiness meeting his family was the moment the fairytale truly began.
+            </div>
+            <div class="photo-grid">
+                <img src="Love_2.JPG" alt="First Hello" class="story-img tilt-img" onclick="openLightbox(this)">
+                <img src="Love_3.JPG" alt="Leap of Faith" class="story-img tilt-img" onclick="openLightbox(this)">
+            </div>
+        </div>
+    </div>
 
-    <script>
-        function createHeart() {
-            const heart = document.createElement('div');
-            heart.classList.add('heart');
-            heart.innerHTML = '❤️';
-            const colors = ['rgba(255, 182, 193, 0.8)', 'rgba(255, 0, 0, 0.7)', 'rgba(255, 215, 0, 0.8)', 'rgba(255, 105, 180, 0.7)'];
-            heart.style.color = colors[Math.floor(Math.random() * colors.length)];
-            heart.style.left = Math.random() * 100 + "vw";
-            heart.style.fontSize = Math.random() * 10 + 15 + "px";
-            heart.style.animationDuration = Math.random() * 3 + 8 + "s";
-            document.body.appendChild(heart);
-            setTimeout(() => { heart.remove(); }, 10000);
-        }
-        setInterval(createHeart, 600);
+    <!-- Chapter 2 -->
+    <div class="chapter-card scroll-reveal">
+        <div class="chapter-num">Chapter Two</div>
+        <div class="chapter-title">Written in the Stars</div>
+        <div class="story-grid reverse">
+            <div class="story-text">
+                <strong style="color:var(--gold-pale)">November 25th:</strong> Prajwal flew from Pune to Lucknow. Three days later, his father asked: <em>"Are you sure?"</em> The answer was instant: <em>"100%."</em>
+                <br><br>
+                At Starbucks, while families prepared the shagun, forty stolen minutes were more than enough. They already knew.
+                <div class="pull-quote">The Roka. The Tika. The Mithai. And a parking lot that proved the universe approved.</div>
+                On <strong style="color:var(--gold-pale)">November 29th</strong>, Shiwangi arrived in a beautiful Chikan Kurta. Hazelnut Factory in Hazratganj. Then Platform 1. Coach A3, Berth 29. An overnight journey to Delhi — their first as a couple, heading toward a future.
+            </div>
+            <div class="photo-grid">
+                <img src="Love_5.JPG" alt="Roka" class="story-img tilt-img" onclick="openLightbox(this)">
+                <img src="Love_6.JPG" alt="Hazelnut Factory" class="story-img tilt-img" onclick="openLightbox(this)">
+                <img src="Love_7.JPG" alt="Train" class="story-img span-2 tilt-img" onclick="openLightbox(this)">
+                <img src="Love_4.JPG" alt="Delhi" class="story-img tilt-img" onclick="openLightbox(this)">
+                <img src="Love_8.JPG" alt="Delhi 2" class="story-img tilt-img" onclick="openLightbox(this)">
+            </div>
+        </div>
+    </div>
+</section>
 
-        const weddingDate = new Date("June 19, 2026 00:00:00").getTime();
-        setInterval(function() {
-            const now = new Date().getTime();
-            const distance = weddingDate - now;
-            document.getElementById("days").innerHTML = Math.floor(distance / (1000 * 60 * 60 * 24));
-            document.getElementById("hours").innerHTML = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            document.getElementById("minutes").innerHTML = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            document.getElementById("seconds").innerHTML = Math.floor((distance % (1000 * 60)) / 1000);
-        }, 1000);
+<!-- ══ GALLERY ══ -->
+<section class="gallery-section">
+    <div class="section-label">Moments</div>
+    <div class="section-heading">A Glimpse of <em>Us</em></div>
+    <div class="gallery-strip" id="galleryStrip">
+        <img src="Love_1.JPG" class="gallery-thumb" onclick="openLightbox(this)">
+        <img src="Love_2.JPG" class="gallery-thumb" onclick="openLightbox(this)">
+        <img src="Love_3.JPG" class="gallery-thumb" onclick="openLightbox(this)">
+        <img src="Love_4.JPG" class="gallery-thumb" onclick="openLightbox(this)">
+        <img src="Love_5.JPG" class="gallery-thumb" onclick="openLightbox(this)">
+        <img src="Love_6.JPG" class="gallery-thumb" onclick="openLightbox(this)">
+        <img src="Love_7.JPG" class="gallery-thumb" onclick="openLightbox(this)">
+        <img src="Love_8.JPG" class="gallery-thumb" onclick="openLightbox(this)">
+    </div>
+    <p style="text-align:center;font-size:0.7rem;letter-spacing:2px;color:var(--gold);margin-top:10px;text-transform:uppercase;">← Scroll to explore →</p>
+</section>
 
-        function toggleMusic() {
-            const song = document.getElementById("weddingSong");
-            const btn = document.getElementById("musicToggle");
-            if (song.paused) { song.play(); btn.innerHTML = "⏸ Pause Music"; }
-            else { song.pause(); btn.innerHTML = "🎵 Play Our Song"; }
-        }
-    </script>
+<!-- ══ RSVP ══ -->
+<section class="rsvp-section" id="rsvp">
+    <div class="section-label">Join the celebration</div>
+    <div class="section-heading">You're <em>Invited</em></div>
+    <div class="rsvp-card scroll-reveal">
+        <div id="rsvpForm">
+            <p style="font-size:0.85rem;color:var(--ivory-dim);margin-bottom:24px;line-height:1.8;">
+                June 19<sup>th</sup>, 2026 · City Club, Lucknow<br>
+                Please let us know you'll be there ✦
+            </p>
+            <input type="text" id="rsvpName" placeholder="Your Name" required>
+            <select id="rsvpAttend">
+                <option value="" disabled selected>Will you attend?</option>
+                <option value="yes">Joyfully attending 🎉</option>
+                <option value="no">Sending love from afar</option>
+            </select>
+            <input type="text" id="rsvpSong" placeholder="Song request for the DJ (optional)">
+            <textarea id="rsvpMsg" placeholder="A message for the couple (optional)"></textarea>
+            <button class="btn-submit" onclick="submitRSVP()">Confirm Attendance</button>
+        </div>
+        <div id="rsvpThanks" class="rsvp-thanks">
+            <div style="font-size:3rem;margin-bottom:16px">✦</div>
+            We can't wait to celebrate with you!<br>
+            <span style="font-size:1rem;font-family:'Jost';color:var(--ivory-dim);font-style:normal;">See you June 19th, 2026</span>
+        </div>
+    </div>
+</section>
+
+<!-- ══ PLAYLIST ══ -->
+<section class="playlist-section">
+    <div class="section-label">The Soundtrack</div>
+    <div class="section-heading">Songs of <em>Our Story</em></div>
+    <div class="playlist-grid">
+        <div class="song-card scroll-reveal">
+            <div class="song-icon">♪</div>
+            <div>
+                <div class="song-title">Chann Vi Gawah</div>
+                <div class="song-why">Madhav Mahajan · Our song</div>
+            </div>
+        </div>
+        <div class="song-card scroll-reveal">
+            <div class="song-icon">♪</div>
+            <div>
+                <div class="song-title">Tum Hi Ho</div>
+                <div class="song-why">Arijit Singh · What the first call felt like</div>
+            </div>
+        </div>
+        <div class="song-card scroll-reveal">
+            <div class="song-icon">♪</div>
+            <div>
+                <div class="song-title">Tera Yaar Hoon Main</div>
+                <div class="song-why">Arijit Singh · The Starbucks moment</div>
+            </div>
+        </div>
+        <div class="song-card scroll-reveal">
+            <div class="song-icon">♪</div>
+            <div>
+                <div class="song-title">Mere Dholna</div>
+                <div class="song-why">For the dance floor, always</div>
+            </div>
+        </div>
+        <div class="song-card scroll-reveal">
+            <div class="song-icon">♪</div>
+            <div>
+                <div class="song-title">Pehla Nasha</div>
+                <div class="song-why">That overnight train to Delhi</div>
+            </div>
+        </div>
+        <div class="song-card scroll-reveal">
+            <div class="song-icon">♪</div>
+            <div>
+                <div class="song-title">Kahani Suno 2.0</div>
+                <div class="song-why">Kaifi Khalil · A3, Berth 29</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+    <div class="footer-names">Prajwal <em>&</em> Shiwangi</div>
+    <div class="footer-date">19 · June · 2026 · Lucknow</div>
+    <div class="footer-note">Made with love, for the day of a lifetime ✦</div>
+</footer>
+
+<!-- ══ LIGHTBOX ══ -->
+<div id="lightbox">
+    <button class="lb-close" onclick="closeLightbox()">✕</button>
+    <button class="lb-arrow" id="lb-prev" onclick="lbNav(-1)">‹</button>
+    <img id="lightbox-img" src="" alt="">
+    <button class="lb-arrow" id="lb-next" onclick="lbNav(1)">›</button>
+</div>
+
+<!-- Audio -->
+<audio id="weddingSong" loop>
+    <source src="Chann Vi Gawah - Madhav Mahajan.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+// ── CURSOR ──
+const cursor = document.getElementById('cursor');
+const cursorDot = document.getElementById('cursor-dot');
+let mx = 0, my = 0, cx = 0, cy = 0;
+document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+(function animCursor() {
+    cx += (mx - cx) * 0.12;
+    cy += (my - cy) * 0.12;
+    cursor.style.left = cx + 'px';
+    cursor.style.top  = cy + 'px';
+    cursorDot.style.left = mx + 'px';
+    cursorDot.style.top  = my + 'px';
+    requestAnimationFrame(animCursor);
+})();
+document.querySelectorAll('a,button,.story-img,.gallery-thumb').forEach(el => {
+    el.addEventListener('mouseenter', () => { cursor.style.width='48px'; cursor.style.height='48px'; });
+    el.addEventListener('mouseleave', () => { cursor.style.width='28px'; cursor.style.height='28px'; });
+});
+
+// ── PARALLAX HERO ──
+const heroBg = document.getElementById('heroBg');
+window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    heroBg.style.transform = `scale(1.1) translateY(${y * 0.25}px)`;
+});
+
+// ── NAME ANIMATION ──
+const nameStr1 = "Prajwal";
+const nameStr2 = "Shiwangi";
+const container = document.getElementById('heroNames');
+let html = '';
+nameStr1.split('').forEach((c,i) => { html += `<span class="char" style="transition-delay:${0.6 + i*0.06}s">${c}</span>`; });
+html += `<span class="char amp" style="transition-delay:${0.6 + nameStr1.length*0.06}s">&amp;</span>`;
+nameStr2.split('').forEach((c,i) => { html += `<span class="char" style="transition-delay:${0.6 + (nameStr1.length+1+i)*0.06}s">${c}</span>`; });
+container.innerHTML = html;
+setTimeout(() => {
+    document.querySelectorAll('.char').forEach(c => c.classList.add('visible'));
+    document.getElementById('heroDivider').classList.add('expanded');
+}, 100);
+
+// ── PETALS ──
+const petalSymbols = ['🌸','🪷','✿','❀','🌺'];
+function spawnPetal() {
+    const p = document.createElement('div');
+    p.className = 'petal';
+    p.innerHTML = petalSymbols[Math.floor(Math.random()*petalSymbols.length)];
+    p.style.left = Math.random()*100 + 'vw';
+    p.style.fontSize = (Math.random()*12+10) + 'px';
+    const dur = Math.random()*8+10;
+    p.style.animationDuration = dur + 's';
+    p.style.animationDelay = (-Math.random()*dur) + 's';
+    document.getElementById('hero').appendChild(p);
+    setTimeout(() => p.remove(), (dur+5)*1000);
+}
+for(let i=0;i<18;i++) spawnPetal();
+setInterval(spawnPetal, 1200);
+
+// ── FLIP COUNTDOWN ──
+const weddingDate = new Date("June 19, 2026 00:00:00").getTime();
+let prevVals = { d:'', h:'', m:'', s:'' };
+
+function pad(n){ return String(n).padStart(2,'0'); }
+
+function flipUpdate(topId, botId, newVal, key) {
+    const top = document.getElementById(topId);
+    const bot = document.getElementById(botId);
+    if(newVal === prevVals[key]) return;
+    prevVals[key] = newVal;
+    top.innerText = newVal;
+    bot.innerText = newVal;
+}
+
+setInterval(() => {
+    const dist = weddingDate - Date.now();
+    if(dist < 0) return;
+    flipUpdate('fDays','fDaysB', pad(Math.floor(dist/86400000)), 'd');
+    flipUpdate('fHours','fHoursB', pad(Math.floor((dist%86400000)/3600000)), 'h');
+    flipUpdate('fMin','fMinB', pad(Math.floor((dist%3600000)/60000)), 'm');
+    flipUpdate('fSec','fSecB', pad(Math.floor((dist%60000)/1000)), 's');
+}, 1000);
+
+// ── MUSIC ──
+function toggleMusic() {
+    const song = document.getElementById('weddingSong');
+    const btn  = document.getElementById('musicToggle');
+    const icon = document.getElementById('musicIcon');
+    if(song.paused) {
+        song.play();
+        icon.innerText = '⏸';
+        btn.querySelector('span').nextSibling.textContent = ' Pause Music';
+    } else {
+        song.pause();
+        icon.innerText = '♪';
+        btn.querySelector('span').nextSibling.textContent = ' Play Our Song';
+    }
+}
+
+// ── SCROLL REVEAL ──
+const revealObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting) { e.target.classList.add('visible'); } });
+}, { threshold: 0.12 });
+
+document.querySelectorAll('.scroll-reveal, .vt-item, .song-card').forEach(el => revealObs.observe(el));
+
+// ── 3D TILT ──
+function isMobile(){ return window.matchMedia('(hover:none)').matches; }
+document.querySelectorAll('.tilt-img').forEach(img => {
+    img.addEventListener('mousemove', (e) => {
+        if(isMobile()) return;
+        const r = img.getBoundingClientRect();
+        const x = (e.clientX - r.left)/r.width  - 0.5;
+        const y = (e.clientY - r.top )/r.height - 0.5;
+        img.style.transform = `scale(1.04) rotateY(${x*10}deg) rotateX(${-y*10}deg)`;
+    });
+    img.addEventListener('mouseleave', () => { img.style.transform = ''; });
+});
+
+// ── LIGHTBOX ──
+const galleryImgs = Array.from(document.querySelectorAll('.gallery-thumb, .story-img'));
+let lbIndex = 0;
+
+function openLightbox(el) {
+    lbIndex = galleryImgs.indexOf(el);
+    document.getElementById('lightbox-img').src = el.src;
+    document.getElementById('lightbox').classList.add('open');
+    document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+    document.body.style.overflow = '';
+}
+function lbNav(dir) {
+    lbIndex = (lbIndex + dir + galleryImgs.length) % galleryImgs.length;
+    const img = document.getElementById('lightbox-img');
+    img.style.opacity = '0';
+    img.style.transform = 'scale(0.94)';
+    setTimeout(() => {
+        img.src = galleryImgs[lbIndex].src;
+        img.style.opacity = '1';
+        img.style.transform = 'scale(1)';
+    }, 200);
+}
+document.getElementById('lightbox-img').style.transition = 'opacity 0.2s, transform 0.2s';
+document.getElementById('lightbox').addEventListener('click', (e) => {
+    if(e.target === document.getElementById('lightbox')) closeLightbox();
+});
+document.addEventListener('keydown', (e) => {
+    if(document.getElementById('lightbox').classList.contains('open')) {
+        if(e.key==='Escape') closeLightbox();
+        if(e.key==='ArrowRight') lbNav(1);
+        if(e.key==='ArrowLeft') lbNav(-1);
+    }
+});
+
+// ── RSVP ──
+function submitRSVP() {
+    const name = document.getElementById('rsvpName').value.trim();
+    const attend = document.getElementById('rsvpAttend').value;
+    if(!name || !attend) { alert('Please fill in your name and attendance ✦'); return; }
+    document.getElementById('rsvpForm').style.display = 'none';
+    document.getElementById('rsvpThanks').style.display = 'block';
+    if(attend === 'yes') {
+        confetti({ particleCount: 140, spread: 90, colors: ['#c9a84c','#e8c96a','#fff8f0','#ffb6c1'], origin: { y: 0.6 } });
+        setTimeout(() => confetti({ particleCount: 60, spread: 60, colors: ['#c9a84c','#ffffff'], origin: { y: 0.5, x: 0.2 } }), 400);
+        setTimeout(() => confetti({ particleCount: 60, spread: 60, colors: ['#c9a84c','#ffffff'], origin: { y: 0.5, x: 0.8 } }), 700);
+    }
+}
+</script>
 </body>
 </html>

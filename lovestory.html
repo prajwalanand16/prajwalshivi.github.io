@@ -198,69 +198,91 @@
             animation: fadeUp 1s ease 2s forwards;
         }
 
-        .flip-box {
-            text-align: center;
+        /* ── CASINO SLOT ROLLER ── */
+        .slot-unit {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
         }
 
-        .flip-card {
-            width: 80px;
-            height: 90px;
+        .slot-digits {
+            display: flex;
+            gap: 6px;
+        }
+
+        .slot-reel-wrap {
+            width: 52px;
+            height: 80px;
+            overflow: hidden;
             position: relative;
-            perspective: 200px;
+            background: rgba(10, 8, 5, 0.85);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            box-shadow:
+                inset 0 10px 20px rgba(0,0,0,0.6),
+                inset 0 -10px 20px rgba(0,0,0,0.6),
+                0 0 12px rgba(201,168,76,0.08);
         }
 
-        .flip-top, .flip-bottom {
-            width: 100%;
-            height: 50%;
-            background: rgba(255,248,240,0.07);
-            border: 1px solid var(--border);
+        /* top & bottom fade masks */
+        .slot-reel-wrap::before,
+        .slot-reel-wrap::after {
+            content: '';
+            position: absolute;
+            left: 0; right: 0;
+            height: 26px;
+            z-index: 2;
+            pointer-events: none;
+        }
+        .slot-reel-wrap::before {
+            top: 0;
+            background: linear-gradient(to bottom, rgba(10,8,5,0.95), transparent);
+        }
+        .slot-reel-wrap::after {
+            bottom: 0;
+            background: linear-gradient(to top, rgba(10,8,5,0.95), transparent);
+        }
+
+        /* gold highlight band in the center */
+        .slot-highlight {
+            position: absolute;
+            left: 0; right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 34px;
+            border-top: 1px solid rgba(201,168,76,0.4);
+            border-bottom: 1px solid rgba(201,168,76,0.4);
+            background: rgba(201,168,76,0.05);
+            z-index: 3;
+            pointer-events: none;
+        }
+
+        .slot-reel {
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.55s cubic-bezier(0.25, 0.85, 0.45, 1.0);
+            will-change: transform;
+        }
+
+        .slot-digit {
+            height: 80px;
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow: hidden;
-            position: relative;
-        }
-        .flip-top {
-            border-radius: 8px 8px 0 0;
-            border-bottom: 1px solid rgba(201,168,76,0.15);
-            align-items: flex-end;
-            padding-bottom: 4px;
-        }
-        .flip-bottom {
-            border-radius: 0 0 8px 8px;
-            align-items: flex-start;
-            padding-top: 4px;
-        }
-        .flip-number {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 2.8rem;
+            font-size: 2.6rem;
             font-weight: 600;
             color: var(--ivory);
+            flex-shrink: 0;
             line-height: 1;
         }
-        .flip-label {
+
+        .slot-label {
             font-size: 0.6rem;
             letter-spacing: 3px;
             text-transform: uppercase;
             color: var(--gold);
-            margin-top: 7px;
-        }
-
-        .flip-anim {
-            position: absolute;
-            inset: 0;
-            background: rgba(255,248,240,0.06);
-            transform-origin: bottom;
-            animation: flipAnim 0.4s ease forwards;
-            display: flex;
-            align-items: flex-end;
-            justify-content: center;
-            padding-bottom: 4px;
-            border-radius: 8px 8px 0 0;
-        }
-        @keyframes flipAnim {
-            0%   { transform: rotateX(0deg); opacity: 1; }
-            100% { transform: rotateX(-90deg); opacity: 0; }
         }
 
         /* Buttons */
@@ -802,35 +824,8 @@
         <div class="hero-divider" id="heroDivider"></div>
         <div class="hero-date">June 19<sup>th</sup>, 2026 &nbsp;·&nbsp; City Club, Lucknow</div>
 
-        <div class="countdown-wrap">
-            <div class="flip-box">
-                <div class="flip-card">
-                    <div class="flip-top"><span class="flip-number" id="fDays">00</span></div>
-                    <div class="flip-bottom"><span class="flip-number" id="fDaysB">00</span></div>
-                </div>
-                <div class="flip-label">Days</div>
-            </div>
-            <div class="flip-box">
-                <div class="flip-card">
-                    <div class="flip-top"><span class="flip-number" id="fHours">00</span></div>
-                    <div class="flip-bottom"><span class="flip-number" id="fHoursB">00</span></div>
-                </div>
-                <div class="flip-label">Hours</div>
-            </div>
-            <div class="flip-box">
-                <div class="flip-card">
-                    <div class="flip-top"><span class="flip-number" id="fMin">00</span></div>
-                    <div class="flip-bottom"><span class="flip-number" id="fMinB">00</span></div>
-                </div>
-                <div class="flip-label">Mins</div>
-            </div>
-            <div class="flip-box">
-                <div class="flip-card">
-                    <div class="flip-top"><span class="flip-number" id="fSec">00</span></div>
-                    <div class="flip-bottom"><span class="flip-number" id="fSecB">00</span></div>
-                </div>
-                <div class="flip-label">Secs</div>
-            </div>
+        <div class="countdown-wrap" id="countdownWrap">
+            <!-- JS builds the slot reels -->
         </div>
 
         <div class="hero-btns">
@@ -1140,29 +1135,118 @@ function spawnPetal() {
 for(let i=0;i<18;i++) spawnPetal();
 setInterval(spawnPetal, 1200);
 
-// ── FLIP COUNTDOWN ──
+// ── CASINO SLOT COUNTDOWN ──
 const weddingDate = new Date("June 19, 2026 00:00:00").getTime();
-let prevVals = { d:'', h:'', m:'', s:'' };
 
-function pad(n){ return String(n).padStart(2,'0'); }
+// Each "unit" = { label, digits: 2, max }
+const units = [
+    { id: 'days',  label: 'Days',  digits: 3 },
+    { id: 'hours', label: 'Hours', digits: 2 },
+    { id: 'mins',  label: 'Mins',  digits: 2 },
+    { id: 'secs',  label: 'Secs',  digits: 2 },
+];
 
-function flipUpdate(topId, botId, newVal, key) {
-    const top = document.getElementById(topId);
-    const bot = document.getElementById(botId);
-    if(newVal === prevVals[key]) return;
-    prevVals[key] = newVal;
-    top.innerText = newVal;
-    bot.innerText = newVal;
+const reelMap = {}; // id+pos -> { reel el, current digit }
+
+// Build DOM
+const wrap = document.getElementById('countdownWrap');
+units.forEach(u => {
+    const unit = document.createElement('div');
+    unit.className = 'slot-unit';
+
+    const digitsRow = document.createElement('div');
+    digitsRow.className = 'slot-digits';
+
+    reelMap[u.id] = [];
+    for (let i = 0; i < u.digits; i++) {
+        const reelWrap = document.createElement('div');
+        reelWrap.className = 'slot-reel-wrap';
+
+        const highlight = document.createElement('div');
+        highlight.className = 'slot-highlight';
+
+        const reel = document.createElement('div');
+        reel.className = 'slot-reel';
+
+        // Build digit strip: 0-9 repeated 3 times for seamless rolling
+        // Centre copy is the "live" one we position to
+        for (let rep = 0; rep < 3; rep++) {
+            for (let d = 0; d <= 9; d++) {
+                const span = document.createElement('div');
+                span.className = 'slot-digit';
+                span.textContent = d;
+                reel.appendChild(span);
+            }
+        }
+
+        reelWrap.appendChild(highlight);
+        reelWrap.appendChild(reel);
+        digitsRow.appendChild(reelWrap);
+        reelMap[u.id].push({ reel, current: -1 });
+    }
+
+    const lbl = document.createElement('div');
+    lbl.className = 'slot-label';
+    lbl.textContent = u.label;
+
+    unit.appendChild(digitsRow);
+    unit.appendChild(lbl);
+    wrap.appendChild(unit);
+});
+
+// Animate a single reel to show digit d (0-9)
+// We use the MIDDLE set (indices 10-19) as the target.
+// translateY offset = -(10 + d) * 80px  (each digit cell = 80px tall)
+// We also add a "slam" overshoot feel via cubic-bezier in CSS transition.
+function spinReel(reelObj, d) {
+    if (reelObj.current === d) return;
+    reelObj.current = d;
+    const target = -(10 + d) * 80;
+    reelObj.reel.style.transform = `translateY(${target}px)`;
 }
 
-setInterval(() => {
+function getDigits(val, count) {
+    return String(val).padStart(count, '0').split('').map(Number);
+}
+
+function tickCountdown() {
     const dist = weddingDate - Date.now();
-    if(dist < 0) return;
-    flipUpdate('fDays','fDaysB', pad(Math.floor(dist/86400000)), 'd');
-    flipUpdate('fHours','fHoursB', pad(Math.floor((dist%86400000)/3600000)), 'h');
-    flipUpdate('fMin','fMinB', pad(Math.floor((dist%3600000)/60000)), 'm');
-    flipUpdate('fSec','fSecB', pad(Math.floor((dist%60000)/1000)), 's');
-}, 1000);
+    if (dist < 0) return;
+
+    const totalSecs = Math.floor(dist / 1000);
+    const d = Math.floor(totalSecs / 86400);
+    const h = Math.floor((totalSecs % 86400) / 3600);
+    const m = Math.floor((totalSecs % 3600) / 60);
+    const s = totalSecs % 60;
+
+    const vals = { days: d, hours: h, mins: m, secs: s };
+    const digitCounts = { days: 3, hours: 2, mins: 2, secs: 2 };
+
+    units.forEach(u => {
+        const digits = getDigits(vals[u.id], digitCounts[u.id]);
+        digits.forEach((dg, i) => {
+            spinReel(reelMap[u.id][i], dg);
+        });
+    });
+}
+
+// Initial position instantly (no transition), then enable transition
+units.forEach(u => {
+    reelMap[u.id].forEach(obj => {
+        obj.reel.style.transition = 'none';
+        obj.reel.style.transform = `translateY(${-(10) * 80}px)`; // start at 0
+    });
+});
+setTimeout(() => {
+    units.forEach(u => {
+        reelMap[u.id].forEach(obj => {
+            obj.reel.style.transition = 'transform 0.55s cubic-bezier(0.25, 0.85, 0.45, 1.0)';
+        });
+    });
+    tickCountdown();
+}, 200);
+
+setInterval(tickCountdown, 1000);
 
 // ── MUSIC ──
 function toggleMusic() {

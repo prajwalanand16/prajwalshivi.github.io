@@ -198,55 +198,91 @@
             animation: fadeUp 1s ease 2s forwards;
         }
 
-
-                /* ── MINIMALIST FADE COUNTDOWN ── */
-        .countdown-wrap {
-            display: flex;
-            gap: 30px;
-            margin: 40px 0;
-            justify-content: center;
-        }
-        
-        .count-item {
+        /* ── CASINO SLOT ROLLER ── */
+        .slot-unit {
             display: flex;
             flex-direction: column;
             align-items: center;
-            min-width: 60px;
+            gap: 10px;
         }
-        
-        .count-number {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 3rem;
-            font-weight: 300;
-            color: var(--gold);
-            line-height: 1;
+
+        .slot-digits {
+            display: flex;
+            gap: 6px;
+        }
+
+        .slot-reel-wrap {
+            width: 52px;
+            height: 80px;
+            overflow: hidden;
             position: relative;
-            transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.6s ease;
+            background: rgba(44,34,24,0.08);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            box-shadow:
+                inset 0 10px 20px rgba(44,34,24,0.12),
+                inset 0 -10px 20px rgba(44,34,24,0.12),
+                0 0 12px rgba(168,130,58,0.1);
         }
-        
-        /* The animation class we'll trigger via JS */
-        .number-fade {
-            animation: fadeSwap 0.5s ease-in-out;
+
+        /* top & bottom fade masks */
+        .slot-reel-wrap::before,
+        .slot-reel-wrap::after {
+            content: '';
+            position: absolute;
+            left: 0; right: 0;
+            height: 26px;
+            z-index: 2;
+            pointer-events: none;
         }
-        
-        @keyframes fadeSwap {
-            0% { opacity: 0; transform: translateY(10px); }
-            100% { opacity: 1; transform: translateY(0); }
+        .slot-reel-wrap::before {
+            top: 0;
+            background: linear-gradient(to bottom, rgba(250,246,240,0.92), transparent);
         }
-        
-        .count-label {
+        .slot-reel-wrap::after {
+            bottom: 0;
+            background: linear-gradient(to top, rgba(250,246,240,0.92), transparent);
+        }
+
+        /* gold highlight band in the center */
+        .slot-highlight {
+            position: absolute;
+            left: 0; right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 34px;
+            border-top: 1px solid rgba(201,168,76,0.4);
+            border-bottom: 1px solid rgba(201,168,76,0.4);
+            background: rgba(201,168,76,0.05);
+            z-index: 3;
+            pointer-events: none;
+        }
+
+        .slot-reel {
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.55s cubic-bezier(0.25, 0.85, 0.45, 1.0);
+            will-change: transform;
+        }
+
+        .slot-digit {
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.6rem;
+            font-weight: 600;
+            color: #2c2218;
+            flex-shrink: 0;
+            line-height: 1;
+        }
+
+        .slot-label {
             font-size: 0.6rem;
             letter-spacing: 3px;
             text-transform: uppercase;
-            color: var(--gold-pale);
-            margin-top: 8px;
-            opacity: 0.8;
-        }
-        
-        @media (max-width: 768px) {
-            .countdown-wrap { gap: 15px; }
-            .count-number { font-size: 2.2rem; }
-            .count-item { min-width: 50px; }
+            color: var(--gold);
         }
 
         /* Buttons */
@@ -803,23 +839,8 @@
         <div class="hero-date">June 19<sup>th</sup>, 2026 &nbsp;·&nbsp; City Club, Lucknow</div>
 
         <div class="countdown-wrap" id="countdownWrap">
-    <div class="count-item">
-        <div class="count-number" id="days">00</div>
-        <div class="count-label">Days</div>
-    </div>
-    <div class="count-item">
-        <div class="count-number" id="hours">00</div>
-        <div class="count-label">Hrs</div>
-    </div>
-    <div class="count-item">
-        <div class="count-number" id="mins">00</div>
-        <div class="count-label">Min</div>
-    </div>
-    <div class="count-item">
-        <div class="count-number" id="secs">00</div>
-        <div class="count-label">Sec</div>
-    </div>
-  </div>
+            <!-- JS builds the slot reels -->
+        </div>
 
         <div class="hero-btns">
             <button id="musicToggle" class="btn btn-outline" onclick="toggleMusic()">
@@ -1102,38 +1123,65 @@ function spawnPetal() {
 for(let i=0;i<18;i++) spawnPetal();
 setInterval(spawnPetal, 1200);
 
-const targetDate = new Date("June 19, 2026 18:00:00").getTime();
+// ── CASINO SLOT COUNTDOWN ──
+const weddingDate = new Date("June 19, 2026 00:00:00").getTime();
 
-function updateCountdown() {
-    const now = new Date().getTime();
-    const diff = targetDate - now;
+// Each "unit" = { label, digits: 2, max }
+const units = [
+    { id: 'days',  label: 'Days',  digits: 3 },
+    { id: 'hours', label: 'Hours', digits: 2 },
+    { id: 'mins',  label: 'Mins',  digits: 2 },
+    { id: 'secs',  label: 'Secs',  digits: 2 },
+];
 
-    if (diff < 0) return; // Wedding started!
+const reelMap = {}; // id+pos -> { reel el, current digit }
 
-    const data = {
-        days: Math.floor(diff / (1000 * 60 * 60 * 24)),
-        hours: Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
-        mins: Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)),
-        secs: Math.floor((diff % (1000 * 60)) / 1000)
-    };
+// Build DOM
+const wrap = document.getElementById('countdownWrap');
+units.forEach(u => {
+    const unit = document.createElement('div');
+    unit.className = 'slot-unit';
 
-    for (const key in data) {
-        const el = document.getElementById(key);
-        const val = data[key].toString().padStart(2, '0');
+    const digitsRow = document.createElement('div');
+    digitsRow.className = 'slot-digits';
 
-        // Only animate if the value has changed
-        if (el.innerText !== val) {
-            el.classList.remove('number-fade');
-            void el.offsetWidth; // Trigger reflow to restart animation
-            el.innerText = val;
-            el.classList.add('number-fade');
+    reelMap[u.id] = [];
+    for (let i = 0; i < u.digits; i++) {
+        const reelWrap = document.createElement('div');
+        reelWrap.className = 'slot-reel-wrap';
+
+        const highlight = document.createElement('div');
+        highlight.className = 'slot-highlight';
+
+        const reel = document.createElement('div');
+        reel.className = 'slot-reel';
+
+        // Build digit strip: 0-9 repeated 3 times for seamless rolling
+        // Centre copy is the "live" one we position to
+        for (let rep = 0; rep < 3; rep++) {
+            for (let d = 0; d <= 9; d++) {
+                const span = document.createElement('div');
+                span.className = 'slot-digit';
+                span.textContent = d;
+                reel.appendChild(span);
+            }
         }
-    }
-}
 
-// Update every second
-setInterval(updateCountdown, 1000);
-updateCountdown(); // Run once immediately
+        reelWrap.appendChild(highlight);
+        reelWrap.appendChild(reel);
+        digitsRow.appendChild(reelWrap);
+        reelMap[u.id].push({ reel, current: -1 });
+    }
+
+    const lbl = document.createElement('div');
+    lbl.className = 'slot-label';
+    lbl.textContent = u.label;
+
+    unit.appendChild(digitsRow);
+    unit.appendChild(lbl);
+    wrap.appendChild(unit);
+});
+
 // Animate a single reel to show digit d (0-9)
 // We use the MIDDLE set (indices 10-19) as the target.
 // translateY offset = -(10 + d) * 80px  (each digit cell = 80px tall)

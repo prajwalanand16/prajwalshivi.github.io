@@ -8,15 +8,15 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
     <style>
         :root {
-            --gold: #c9a84c;
-            --gold-light: #e8c96a;
-            --gold-pale: #f5e6c8;
-            --black: #0d0a07;
-            --black-mid: #1a1510;
-            --ivory: #fff8f0;
-            --ivory-dim: rgba(255,248,240,0.7);
-            --card-bg: rgba(255,248,240,0.04);
-            --border: rgba(201,168,76,0.25);
+            --gold: #a8823a;
+            --gold-light: #c9a84c;
+            --gold-pale: #7a5c2e;
+            --black: #faf6f0;
+            --black-mid: #f3ede4;
+            --ivory: #2c2218;
+            --ivory-dim: rgba(44,34,24,0.65);
+            --card-bg: rgba(44,34,24,0.04);
+            --border: rgba(168,130,58,0.3);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -82,8 +82,8 @@
         .hero-bg {
             position: absolute;
             inset: -40px;
-            background: linear-gradient(rgba(13,10,7,0.55), rgba(13,10,7,0.55)),
-                        url('Love_1.JPG') center/cover no-repeat;
+            background: linear-gradient(rgba(250,246,240,0.18), rgba(250,246,240,0.18)),
+                        url('Love_1.JPG') center top/cover no-repeat;
             transform: scale(1.1);
             transition: transform 0.1s linear;
             z-index: 0;
@@ -92,7 +92,7 @@
         .hero-vignette {
             position: absolute;
             inset: 0;
-            background: radial-gradient(ellipse at center, transparent 40%, rgba(13,10,7,0.85) 100%);
+            background: radial-gradient(ellipse at center, transparent 35%, rgba(250,246,240,0.6) 100%);
             z-index: 1;
         }
 
@@ -124,8 +124,8 @@
             text-transform: uppercase;
             color: var(--gold-pale);
         }
-        .hero-meta-top { top: 0; background: linear-gradient(to bottom, rgba(13,10,7,0.6), transparent); }
-        .hero-meta-bottom { bottom: 0; background: linear-gradient(to top, rgba(13,10,7,0.6), transparent); }
+        .hero-meta-top { top: 0; background: linear-gradient(to bottom, rgba(250,246,240,0.75), transparent); }
+        .hero-meta-bottom { bottom: 0; background: linear-gradient(to top, rgba(250,246,240,0.75), transparent); }
         .meta-val { font-family: 'Cormorant Garamond', serif; font-size: 1rem; font-weight: 600; display: block; color: var(--gold); }
 
         /* Hero content */
@@ -154,8 +154,9 @@
             font-weight: 300;
             line-height: 1;
             letter-spacing: 2px;
-            color: var(--ivory);
+            color: #2c2218;
             overflow: hidden;
+            text-shadow: 0 2px 20px rgba(250,246,240,0.8);
         }
         .hero-names .char {
             display: inline-block;
@@ -216,13 +217,13 @@
             height: 80px;
             overflow: hidden;
             position: relative;
-            background: rgba(10, 8, 5, 0.85);
+            background: rgba(44,34,24,0.08);
             border: 1px solid var(--border);
             border-radius: 8px;
             box-shadow:
-                inset 0 10px 20px rgba(0,0,0,0.6),
-                inset 0 -10px 20px rgba(0,0,0,0.6),
-                0 0 12px rgba(201,168,76,0.08);
+                inset 0 10px 20px rgba(44,34,24,0.12),
+                inset 0 -10px 20px rgba(44,34,24,0.12),
+                0 0 12px rgba(168,130,58,0.1);
         }
 
         /* top & bottom fade masks */
@@ -237,11 +238,11 @@
         }
         .slot-reel-wrap::before {
             top: 0;
-            background: linear-gradient(to bottom, rgba(10,8,5,0.95), transparent);
+            background: linear-gradient(to bottom, rgba(250,246,240,0.92), transparent);
         }
         .slot-reel-wrap::after {
             bottom: 0;
-            background: linear-gradient(to top, rgba(10,8,5,0.95), transparent);
+            background: linear-gradient(to top, rgba(250,246,240,0.92), transparent);
         }
 
         /* gold highlight band in the center */
@@ -273,7 +274,7 @@
             font-family: 'Cormorant Garamond', serif;
             font-size: 2.6rem;
             font-weight: 600;
-            color: var(--ivory);
+            color: #2c2218;
             flex-shrink: 0;
             line-height: 1;
         }
@@ -401,7 +402,7 @@
             width: 1px;
             background: linear-gradient(to bottom, transparent, var(--gold) 10%, var(--gold) 90%, transparent);
             transform: translateX(-50%);
-            opacity: 0.3;
+            opacity: 0.5;
         }
 
         .vt-item {
@@ -591,7 +592,7 @@
         #lightbox {
             position: fixed;
             inset: 0;
-            background: rgba(13,10,7,0.97);
+            background: rgba(250,246,240,0.97);
             z-index: 7000;
             display: none;
             align-items: center;
@@ -865,15 +866,7 @@
             <div class="vt-node"></div>
             <div style="flex:1"></div>
         </div>
-        <div class="vt-item">
-            <div style="flex:1"></div>
-            <div class="vt-node"></div>
-            <div class="vt-text">
-                <div class="vt-date">5 November 2025</div>
-                <div class="vt-event">Lunch via Zomato</div>
-                <div class="vt-caption">Some souls don't need time to recognise each other — she just knew he needed to eat, and that said everything.</div>
-            </div>
-        </div>
+
         <div class="vt-item">
             <div class="vt-text">
                 <div class="vt-date">16 November 2025</div>
@@ -930,7 +923,7 @@
                 <br><br>
                 The magic was instant.
                 <div class="pull-quote">Some connections don't build over time — they arrive whole, as if two souls had simply found their way back to where they always belonged.</div>
-                By <strong style="color:var(--gold-pale)">November 16th</strong>, Shiwangi and her parents opened their home in Shahganj to Prajwal's family. Miles away in Pune, he watched it all unfold — and knew, with quiet certainty, that something irreversible and beautiful had begun.
+                By <strong style="color:var(--gold-pale)">November 16th</strong>, Prajwal's family made their way to Shahganj, where Shiwangi and her family received them with warmth that felt like it had always been there. He was in Pune, phone in hand, smiling at every update — already feeling like the luckiest person in the room he wasn't even in.
             </div>
             <div class="photo-grid">
                 <img src="Love_2.JPG" alt="First Hello" class="story-img tilt-img" onclick="openLightbox(this)">

@@ -82,7 +82,8 @@
         .hero-bg {
             position: absolute;
             inset: -40px;
-            
+            background: linear-gradient(rgba(250,246,240,0.18), rgba(250,246,240,0.18)),
+                        url('Love_1.JPG') center top/cover no-repeat;
             transform: scale(1.1);
             transition: transform 0.1s linear;
             z-index: 0;
@@ -198,91 +199,74 @@
             animation: fadeUp 1s ease 2s forwards;
         }
 
-        /* ── CASINO SLOT ROLLER ── */
-        .slot-unit {
+        /* ── COUNTDOWN ── */
+        .countdown-wrap {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: nowrap;
+        }
+
+        .cd-unit {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
 
-        .slot-digits {
-            display: flex;
-            gap: 6px;
-        }
-
-        .slot-reel-wrap {
-            width: 52px;
-            height: 80px;
-            overflow: hidden;
-            position: relative;
-            background: rgba(44,34,24,0.08);
+        .cd-box {
+            min-width: 80px;
+            padding: 18px 10px 14px;
+            background: rgba(44,34,24,0.06);
             border: 1px solid var(--border);
-            border-radius: 8px;
-            box-shadow:
-                inset 0 10px 20px rgba(44,34,24,0.12),
-                inset 0 -10px 20px rgba(44,34,24,0.12),
-                0 0 12px rgba(168,130,58,0.1);
-        }
-
-        /* top & bottom fade masks */
-        .slot-reel-wrap::before,
-        .slot-reel-wrap::after {
-            content: '';
-            position: absolute;
-            left: 0; right: 0;
-            height: 26px;
-            z-index: 2;
-            pointer-events: none;
-        }
-        .slot-reel-wrap::before {
-            top: 0;
-            background: linear-gradient(to bottom, rgba(250,246,240,0.92), transparent);
-        }
-        .slot-reel-wrap::after {
-            bottom: 0;
-            background: linear-gradient(to top, rgba(250,246,240,0.92), transparent);
-        }
-
-        /* gold highlight band in the center */
-        .slot-highlight {
-            position: absolute;
-            left: 0; right: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            height: 34px;
-            border-top: 1px solid rgba(201,168,76,0.4);
-            border-bottom: 1px solid rgba(201,168,76,0.4);
-            background: rgba(201,168,76,0.05);
-            z-index: 3;
-            pointer-events: none;
-        }
-
-        .slot-reel {
-            display: flex;
-            flex-direction: column;
-            transition: transform 0.55s cubic-bezier(0.25, 0.85, 0.45, 1.0);
-            will-change: transform;
-        }
-
-        .slot-digit {
-            height: 80px;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 2.6rem;
-            font-weight: 600;
-            color: #2c2218;
-            flex-shrink: 0;
-            line-height: 1;
+            position: relative;
+            overflow: hidden;
         }
 
-        .slot-label {
-            font-size: 0.6rem;
+        /* subtle gold sheen line across middle */
+        .cd-box::after {
+            content: '';
+            position: absolute;
+            left: 10%; right: 10%;
+            top: 50%;
+            height: 1px;
+            background: rgba(168,130,58,0.18);
+        }
+
+        .cd-num {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.8rem;
+            font-weight: 600;
+            color: #2c2218;
+            line-height: 1;
+            letter-spacing: -1px;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+
+        .cd-num.tick {
+            opacity: 0;
+            transform: translateY(-6px);
+        }
+
+        .cd-label {
+            font-size: 0.58rem;
             letter-spacing: 3px;
             text-transform: uppercase;
             color: var(--gold);
+        }
+
+        .cd-sep {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            color: var(--gold);
+            opacity: 0.5;
+            margin-bottom: 20px;
+            flex-shrink: 0;
         }
 
         /* Buttons */
@@ -729,17 +713,12 @@
             .hero-names { font-size: clamp(2.4rem, 11vw, 3.5rem); }
             .hero-date { font-size: 0.65rem; letter-spacing: 3px; padding: 0 16px; }
 
-            /* Countdown — stack into 2x2 grid on mobile */
-            .countdown-wrap {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                gap: 12px;
-                margin: 24px 0 20px;
-                padding: 0 10px;
-            }
-            .slot-reel-wrap { width: 44px; height: 68px; }
-            .slot-digit { height: 68px; font-size: 2.1rem; }
-            .slot-label { font-size: 0.55rem; letter-spacing: 2px; }
+            /* Countdown */
+            .countdown-wrap { gap: 6px; }
+            .cd-box { min-width: 62px; padding: 14px 8px 10px; border-radius: 8px; }
+            .cd-num { font-size: 2rem; }
+            .cd-label { font-size: 0.5rem; letter-spacing: 2px; }
+            .cd-sep { font-size: 1.4rem; margin-bottom: 18px; }
 
             /* Buttons */
             .hero-btns { flex-direction: column; gap: 12px; padding: 0 20px; width: 100%; }
@@ -805,9 +784,9 @@
 
         @media (max-width: 400px) {
             .hero-names { font-size: 2.2rem; }
-            .slot-reel-wrap { width: 38px; height: 60px; }
-            .slot-digit { height: 60px; font-size: 1.8rem; }
-            .slot-digits { gap: 4px; }
+            .cd-box { min-width: 52px; padding: 12px 6px 8px; }
+            .cd-num { font-size: 1.7rem; }
+            .cd-sep { font-size: 1.1rem; }
         }
     </style>
 </head>
@@ -839,7 +818,25 @@
         <div class="hero-date">June 19<sup>th</sup>, 2026 &nbsp;·&nbsp; City Club, Lucknow</div>
 
         <div class="countdown-wrap" id="countdownWrap">
-            <!-- JS builds the slot reels -->
+            <div class="cd-unit">
+                <div class="cd-box"><span class="cd-num" id="cdDays">078</span></div>
+                <div class="cd-label">Days</div>
+            </div>
+            <div class="cd-sep">·</div>
+            <div class="cd-unit">
+                <div class="cd-box"><span class="cd-num" id="cdHours">00</span></div>
+                <div class="cd-label">Hours</div>
+            </div>
+            <div class="cd-sep">·</div>
+            <div class="cd-unit">
+                <div class="cd-box"><span class="cd-num" id="cdMins">00</span></div>
+                <div class="cd-label">Mins</div>
+            </div>
+            <div class="cd-sep">·</div>
+            <div class="cd-unit">
+                <div class="cd-box"><span class="cd-num" id="cdSecs">00</span></div>
+                <div class="cd-label">Secs</div>
+            </div>
         </div>
 
         <div class="hero-btns">
@@ -953,7 +950,7 @@
             <div class="story-text">
                 <strong style="color:var(--gold-pale)">November 25th:</strong> Prajwal flew from Pune to Lucknow. Three days later, his father asked: <em>"Are you sure?"</em> The answer was instant: <em>"100%."</em>
                 <br><br>
-                At Starbucks, while families prepared the shagun nearby, forty minutes belonged entirely to them. And somewhere between the laughter and the quiet, in a lift on the way out — their first hug. Brief, unplanned, and utterly calm. The kind of calm that doesn't need explaining. The kind that simply feels like home.
+                At Starbucks, while families prepared the shagun, forty stolen minutes were more than enough. They already knew.
                 <div class="pull-quote">The Roka. The Tika. The Mithai. And a parking lot that proved the universe approved.</div>
                 On <strong style="color:var(--gold-pale)">November 29th</strong>, Shiwangi arrived in a beautiful Chikan Kurta — and Hazratganj had never felt so cinematic. At The Hazelnut Factory, over their first official date, they talked the way only two people who have known each other forever can — unhurried, unguarded, completely at home in each other's words.
                 <br><br>
@@ -962,8 +959,8 @@
                 <strong style="color:var(--gold-pale)">Delhi, the morning after.</strong> A metro ride to Millennium City Centre, Gurugram — then they parted briefly, she to her PG, he to his Bhaiya and Bhabhi's home. But only briefly. Hours later, reunited, they drove to Aerocity near New Delhi's international airport — where cake was cut for Bhaiya and Bhabhi's anniversary, a little early, because Prajwal had a flight to catch and some celebrations simply cannot wait.
                 <br><br>
                 His brother pulled him aside — <em>"Go, take a walk, just the two of you."</em> They did. Photographs were clicked. Moments were made quietly, the way the best ones always are. Then Bhaiya, Bhabhi, their little <strong style="color:var(--gold-pale)">1.5-year-old Raghav</strong>, and Shiwangi all drove him to Terminal 1.
-                <div class="pull-quote">She walked him to Gate 1. They stood there a moment longer than needed. That's the thing about loving someone — even the airport starts to feel like the hardest place in the world."</div>
-                and then he was back in Pune. Same city, same flat, same desk. But something had changed its shape forever — and he didn't mind one bit.
+                <div class="pull-quote">She walked him to Gate 1 of Departures. No grand words — just the kind of goodbye that makes you certain you are leaving behind someone worth coming back to.</div>
+                And then he was back in Pune. But nothing was quite the same anymore.
             </div>
             <div class="photo-grid">
                 <img src="Love_5.JPG" alt="Roka" class="story-img tilt-img" onclick="openLightbox(this)">
@@ -1123,117 +1120,42 @@ function spawnPetal() {
 for(let i=0;i<18;i++) spawnPetal();
 setInterval(spawnPetal, 1200);
 
-// ── CASINO SLOT COUNTDOWN ──
+// ── COUNTDOWN ──
 const weddingDate = new Date("June 19, 2026 00:00:00").getTime();
 
-// Each "unit" = { label, digits: 2, max }
-const units = [
-    { id: 'days',  label: 'Days',  digits: 3 },
-    { id: 'hours', label: 'Hours', digits: 2 },
-    { id: 'mins',  label: 'Mins',  digits: 2 },
-    { id: 'secs',  label: 'Secs',  digits: 2 },
-];
+function pad(n, len) { return String(n).padStart(len || 2, '0'); }
 
-const reelMap = {}; // id+pos -> { reel el, current digit }
+const cdDays  = document.getElementById('cdDays');
+const cdHours = document.getElementById('cdHours');
+const cdMins  = document.getElementById('cdMins');
+const cdSecs  = document.getElementById('cdSecs');
 
-// Build DOM
-const wrap = document.getElementById('countdownWrap');
-units.forEach(u => {
-    const unit = document.createElement('div');
-    unit.className = 'slot-unit';
-
-    const digitsRow = document.createElement('div');
-    digitsRow.className = 'slot-digits';
-
-    reelMap[u.id] = [];
-    for (let i = 0; i < u.digits; i++) {
-        const reelWrap = document.createElement('div');
-        reelWrap.className = 'slot-reel-wrap';
-
-        const highlight = document.createElement('div');
-        highlight.className = 'slot-highlight';
-
-        const reel = document.createElement('div');
-        reel.className = 'slot-reel';
-
-        // Build digit strip: 0-9 repeated 3 times for seamless rolling
-        // Centre copy is the "live" one we position to
-        for (let rep = 0; rep < 3; rep++) {
-            for (let d = 0; d <= 9; d++) {
-                const span = document.createElement('div');
-                span.className = 'slot-digit';
-                span.textContent = d;
-                reel.appendChild(span);
-            }
-        }
-
-        reelWrap.appendChild(highlight);
-        reelWrap.appendChild(reel);
-        digitsRow.appendChild(reelWrap);
-        reelMap[u.id].push({ reel, current: -1 });
-    }
-
-    const lbl = document.createElement('div');
-    lbl.className = 'slot-label';
-    lbl.textContent = u.label;
-
-    unit.appendChild(digitsRow);
-    unit.appendChild(lbl);
-    wrap.appendChild(unit);
-});
-
-// Animate a single reel to show digit d (0-9)
-// We use the MIDDLE set (indices 10-19) as the target.
-// translateY offset = -(10 + d) * 80px  (each digit cell = 80px tall)
-// We also add a "slam" overshoot feel via cubic-bezier in CSS transition.
-function spinReel(reelObj, d) {
-    if (reelObj.current === d) return;
-    reelObj.current = d;
-    const target = -(10 + d) * 80;
-    reelObj.reel.style.transform = `translateY(${target}px)`;
-}
-
-function getDigits(val, count) {
-    return String(val).padStart(count, '0').split('').map(Number);
+function animateTick(el, newVal) {
+    if (el.textContent === newVal) return;
+    el.classList.add('tick');
+    setTimeout(() => {
+        el.textContent = newVal;
+        el.classList.remove('tick');
+    }, 200);
 }
 
 function tickCountdown() {
     const dist = weddingDate - Date.now();
-    if (dist < 0) return;
-
+    if (dist < 0) {
+        cdDays.textContent = '000';
+        cdHours.textContent = '00';
+        cdMins.textContent  = '00';
+        cdSecs.textContent  = '00';
+        return;
+    }
     const totalSecs = Math.floor(dist / 1000);
-    const d = Math.floor(totalSecs / 86400);
-    const h = Math.floor((totalSecs % 86400) / 3600);
-    const m = Math.floor((totalSecs % 3600) / 60);
-    const s = totalSecs % 60;
-
-    const vals = { days: d, hours: h, mins: m, secs: s };
-    const digitCounts = { days: 3, hours: 2, mins: 2, secs: 2 };
-
-    units.forEach(u => {
-        const digits = getDigits(vals[u.id], digitCounts[u.id]);
-        digits.forEach((dg, i) => {
-            spinReel(reelMap[u.id][i], dg);
-        });
-    });
+    animateTick(cdDays,  pad(Math.floor(totalSecs / 86400), 3));
+    animateTick(cdHours, pad(Math.floor((totalSecs % 86400) / 3600)));
+    animateTick(cdMins,  pad(Math.floor((totalSecs % 3600) / 60)));
+    animateTick(cdSecs,  pad(totalSecs % 60));
 }
 
-// Initial position instantly (no transition), then enable transition
-units.forEach(u => {
-    reelMap[u.id].forEach(obj => {
-        obj.reel.style.transition = 'none';
-        obj.reel.style.transform = `translateY(${-(10) * 80}px)`; // start at 0
-    });
-});
-setTimeout(() => {
-    units.forEach(u => {
-        reelMap[u.id].forEach(obj => {
-            obj.reel.style.transition = 'transform 0.55s cubic-bezier(0.25, 0.85, 0.45, 1.0)';
-        });
-    });
-    tickCountdown();
-}, 200);
-
+tickCountdown();
 setInterval(tickCountdown, 1000);
 
 // ── MUSIC ──
